@@ -1,0 +1,1929 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CommonLit | A Full ELA Program</title>
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAWJAAAFiQFtaJ36AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAJ0SURBVHgB7VZRbtpAEJ1Zux9tf+gNrEIkJ63UDeoByAloTwCcINwAOEHaE7ScIOkJwglgP9pgqVDtDdqfqq3CejpLwDYowJqgJB88yZLH3t2ZfTvzdgD22OOBget+BoEsPPdFnQjeEFAAu3JK2Lv60e+sDMA6fipEi0c2IR/0pgHssED8eEgnX0eq5y8PCAMZoIeX4LpjhJ4g6v42cKG1+rVpeFh6W0Eyl4QisLZ/u3MIwAGI1LkaqTbcAWJhwXt2bpEw8KpYrsc5aF92/pqpNRBXgUiunRubQjbzkgDYeQscQT41snb4styKyXDCYlcAddfNjVFwgGmQ0wAODqTkCAJwABKoYaT03J4xV4+f0HEUDfSm+bMkPJ3b0xzwSVTAFQK/ZE1COmWN6ESZoPLgJgnJbffToRSr+butGhYp+ZdLELbELAeo4DrBQ0hr3fcDIKOz9X9YKjc5yrOVC5BZMAXsGjnYtPAhJwxBytZkopmSBfaG434zLMmVR4LAVZBh6CYARMUfa+CCmYRaRFrpo+Ixa4CsWF1Pvmfel8FVwEGkxzA9AoI0sTaCqJo1DSuiIfwUhjKALZBoEu/kp72lXCb9MfQim3hMeZuv2JoA7IDwlPG8lZcSXl+zCMXnQmDj2/f+51QJET8iuanhM0/YM0zUkClvh0WpY4QaxpMzfpyrKmFAcg/wz8MBOF5GLD71aKy6kBPz63jOQFKGiillVWu4LoSAHw6L8h3cEQs6YLOXd+YaBNOM50fF8tYJaHFrS5a3MZmCLykuZ80LbuqKuCUjZo7eD8fqYm1TyolVFyiqtj2zmg+7AvcTw9HgBPbY4zHgP4+0ADzrINtWAAAAAElFTkSuQmCC">
+
+<!-- In data url to bypass onecompiler ai -->
+
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: white;
+    overflow: hidden;
+}
+
+/* Theme Variables */
+:root {
+    --bg-gradient-1: #0f0f0f;
+    --bg-gradient-2: #1a1a1a;
+    --bg-gradient-3: #0d0d0d;
+    --bg-gradient-4: #1f1f1f;
+    --bg-gradient-5: #000000;
+    
+    --card-bg: rgba(255, 255, 255, 0.08);
+    --card-border: rgba(255, 255, 255, 0.2);
+    --card-shadow: rgba(0, 0, 0, 0.4);
+    --card-hover-shadow: rgba(90, 90, 90, 0.5);
+    
+    --text-primary: white;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    
+    --btn-bg-1: #3a3a3a;
+    --btn-bg-2: #4a4a4a;
+    --btn-shadow: rgba(60, 60, 60, 0.6);
+    
+    --title-gradient-1: #505050;
+    --title-gradient-2: #6a6a6a;
+    --title-gradient-3: #888888;
+    --title-gradient-4: #5a5a5a;
+    --title-gradient-5: #707070;
+    
+    --overlay-brightness: 0.7;
+    --scrollbar-track: rgba(255, 255, 255, 0.05);
+    --scrollbar-thumb: rgba(255, 255, 255, 0.2);
+    
+    --blur-amount: 20px;
+}
+
+/* Deep Dark Theme */
+body[data-theme="deep-dark"] {
+    --bg-gradient-1: #000000;
+    --bg-gradient-2: #0a0a0a;
+    --bg-gradient-3: #050505;
+    --bg-gradient-4: #0f0f0f;
+    --bg-gradient-5: #000000;
+    
+    --card-bg: rgba(40, 40, 40, 0.4);
+    --card-border: rgba(100, 100, 100, 0.3);
+    --card-shadow: rgba(0, 0, 0, 0.8);
+    --card-hover-shadow: rgba(100, 100, 100, 0.4);
+    
+    --btn-bg-1: #2a2a2a;
+    --btn-bg-2: #1a1a1a;
+    --btn-shadow: rgba(0, 0, 0, 0.8);
+    
+    --title-gradient-1: #707070;
+    --title-gradient-2: #909090;
+    --title-gradient-3: #b0b0b0;
+    --title-gradient-4: #808080;
+    --title-gradient-5: #a0a0a0;
+    
+    --overlay-brightness: 0.4;
+    --scrollbar-track: rgba(0, 0, 0, 0.6);
+    --scrollbar-thumb: rgba(120, 120, 120, 0.4);
+    
+    --blur-amount: 30px;
+}
+
+/* OLED Black Theme */
+body[data-theme="oled"] {
+    --bg-gradient-1: #000000;
+    --bg-gradient-2: #000000;
+    --bg-gradient-3: #000000;
+    --bg-gradient-4: #000000;
+    --bg-gradient-5: #000000;
+    
+    --card-bg: rgba(20, 20, 20, 0.5);
+    --card-border: rgba(80, 80, 80, 0.4);
+    --card-shadow: rgba(0, 0, 0, 0.95);
+    --card-hover-shadow: rgba(60, 60, 60, 0.6);
+    
+    --btn-bg-1: #1a1a1a;
+    --btn-bg-2: #0a0a0a;
+    --btn-shadow: rgba(0, 0, 0, 0.95);
+    
+    --title-gradient-1: #606060;
+    --title-gradient-2: #808080;
+    --title-gradient-3: #a0a0a0;
+    --title-gradient-4: #707070;
+    --title-gradient-5: #909090;
+    
+    --overlay-brightness: 0.3;
+    --scrollbar-track: rgba(0, 0, 0, 0.8);
+    --scrollbar-thumb: rgba(100, 100, 100, 0.5);
+    
+    --blur-amount: 25px;
+}
+
+/* Midnight Blue Theme */
+body[data-theme="midnight"] {
+    --bg-gradient-1: #0a0a1a;
+    --bg-gradient-2: #0f0f28;
+    --bg-gradient-3: #080816;
+    --bg-gradient-4: #12122d;
+    --bg-gradient-5: #000008;
+    
+    --card-bg: rgba(30, 30, 60, 0.4);
+    --card-border: rgba(100, 100, 180, 0.3);
+    --card-shadow: rgba(0, 0, 20, 0.8);
+    --card-hover-shadow: rgba(80, 80, 150, 0.5);
+    
+    --btn-bg-1: #2a2a4a;
+    --btn-bg-2: #1a1a3a;
+    --btn-shadow: rgba(0, 0, 30, 0.8);
+    
+    --title-gradient-1: #6070a0;
+    --title-gradient-2: #8090c0;
+    --title-gradient-3: #a0b0e0;
+    --title-gradient-4: #7080b0;
+    --title-gradient-5: #90a0d0;
+    
+    --overlay-brightness: 0.5;
+    --scrollbar-track: rgba(20, 20, 60, 0.6);
+    --scrollbar-thumb: rgba(100, 100, 180, 0.4);
+    
+    --blur-amount: 25px;
+}
+
+/* Charcoal Theme */
+body[data-theme="charcoal"] {
+    --bg-gradient-1: #1a1a1a;
+    --bg-gradient-2: #252525;
+    --bg-gradient-3: #1c1c1c;
+    --bg-gradient-4: #2a2a2a;
+    --bg-gradient-5: #151515;
+    
+    --card-bg: rgba(60, 60, 60, 0.4);
+    --card-border: rgba(120, 120, 120, 0.3);
+    --card-shadow: rgba(0, 0, 0, 0.7);
+    --card-hover-shadow: rgba(100, 100, 100, 0.5);
+    
+    --btn-bg-1: #3a3a3a;
+    --btn-bg-2: #2a2a2a;
+    --btn-shadow: rgba(30, 30, 30, 0.7);
+    
+    --title-gradient-1: #808080;
+    --title-gradient-2: #9a9a9a;
+    --title-gradient-3: #b5b5b5;
+    --title-gradient-4: #8a8a8a;
+    --title-gradient-5: #a5a5a5;
+    
+    --overlay-brightness: 0.6;
+    --scrollbar-track: rgba(40, 40, 40, 0.6);
+    --scrollbar-thumb: rgba(140, 140, 140, 0.4);
+    
+    --blur-amount: 22px;
+}
+
+/* Purple Haze Theme */
+body[data-theme="purple-haze"] {
+    --bg-gradient-1: #1a0a1f;
+    --bg-gradient-2: #2d1b3d;
+    --bg-gradient-3: #1c0d25;
+    --bg-gradient-4: #3a2550;
+    --bg-gradient-5: #15081d;
+    
+    --card-bg: rgba(80, 40, 100, 0.35);
+    --card-border: rgba(150, 100, 200, 0.3);
+    --card-shadow: rgba(30, 0, 50, 0.8);
+    --card-hover-shadow: rgba(120, 80, 160, 0.5);
+    
+    --btn-bg-1: #4a2a5a;
+    --btn-bg-2: #3a1a4a;
+    --btn-shadow: rgba(50, 20, 70, 0.7);
+    
+    --title-gradient-1: #9070b0;
+    --title-gradient-2: #b090d0;
+    --title-gradient-3: #d0b0f0;
+    --title-gradient-4: #a080c0;
+    --title-gradient-5: #c0a0e0;
+    
+    --overlay-brightness: 0.5;
+    --scrollbar-track: rgba(40, 20, 60, 0.6);
+    --scrollbar-thumb: rgba(150, 100, 200, 0.4);
+    
+    --blur-amount: 26px;
+}
+
+/* Forest Night Theme */
+body[data-theme="forest"] {
+    --bg-gradient-1: #0a1a0a;
+    --bg-gradient-2: #152d15;
+    --bg-gradient-3: #0d1f0d;
+    --bg-gradient-4: #1a3a1a;
+    --bg-gradient-5: #081508;
+    
+    --card-bg: rgba(30, 60, 30, 0.4);
+    --card-border: rgba(80, 150, 80, 0.3);
+    --card-shadow: rgba(0, 20, 0, 0.8);
+    --card-hover-shadow: rgba(60, 120, 60, 0.5);
+    
+    --btn-bg-1: #2a4a2a;
+    --btn-bg-2: #1a3a1a;
+    --btn-shadow: rgba(20, 40, 20, 0.7);
+    
+    --title-gradient-1: #70a070;
+    --title-gradient-2: #90c090;
+    --title-gradient-3: #b0e0b0;
+    --title-gradient-4: #80b080;
+    --title-gradient-5: #a0d0a0;
+    
+    --overlay-brightness: 0.5;
+    --scrollbar-track: rgba(20, 40, 20, 0.6);
+    --scrollbar-thumb: rgba(80, 150, 80, 0.4);
+    
+    --blur-amount: 24px;
+}
+
+/* Crimson Shadow Theme */
+body[data-theme="crimson"] {
+    --bg-gradient-1: #1a0a0a;
+    --bg-gradient-2: #2d1515;
+    --bg-gradient-3: #1f0d0d;
+    --bg-gradient-4: #3a1a1a;
+    --bg-gradient-5: #150808;
+    
+    --card-bg: rgba(80, 30, 30, 0.4);
+    --card-border: rgba(180, 80, 80, 0.3);
+    --card-shadow: rgba(30, 0, 0, 0.8);
+    --card-hover-shadow: rgba(140, 60, 60, 0.5);
+    
+    --btn-bg-1: #4a2a2a;
+    --btn-bg-2: #3a1a1a;
+    --btn-shadow: rgba(50, 20, 20, 0.7);
+    
+    --title-gradient-1: #b07070;
+    --title-gradient-2: #d09090;
+    --title-gradient-3: #f0b0b0;
+    --title-gradient-4: #c08080;
+    --title-gradient-5: #e0a0a0;
+    
+    --overlay-brightness: 0.5;
+    --scrollbar-track: rgba(40, 20, 20, 0.6);
+    --scrollbar-thumb: rgba(180, 80, 80, 0.4);
+    
+    --blur-amount: 25px;
+}
+
+/* Ocean Deep Theme */
+body[data-theme="ocean"] {
+    --bg-gradient-1: #0a1520;
+    --bg-gradient-2: #0f2535;
+    --bg-gradient-3: #0d1a28;
+    --bg-gradient-4: #12304a;
+    --bg-gradient-5: #081218;
+    
+    --card-bg: rgba(20, 50, 80, 0.4);
+    --card-border: rgba(80, 150, 200, 0.3);
+    --card-shadow: rgba(0, 15, 30, 0.8);
+    --card-hover-shadow: rgba(60, 120, 160, 0.5);
+    
+    --btn-bg-1: #2a4a5a;
+    --btn-bg-2: #1a3a4a;
+    --btn-shadow: rgba(20, 40, 60, 0.7);
+    
+    --title-gradient-1: #6090b0;
+    --title-gradient-2: #80b0d0;
+    --title-gradient-3: #a0d0f0;
+    --title-gradient-4: #70a0c0;
+    --title-gradient-5: #90c0e0;
+    
+    --overlay-brightness: 0.5;
+    --scrollbar-track: rgba(20, 40, 60, 0.6);
+    --scrollbar-thumb: rgba(80, 150, 200, 0.4);
+    
+    --blur-amount: 26px;
+}
+
+/* Sunset Glow Theme */
+body[data-theme="sunset"] {
+    --bg-gradient-1: #1a1008;
+    --bg-gradient-2: #2d1f10;
+    --bg-gradient-3: #1f1509;
+    --bg-gradient-4: #3a2a12;
+    --bg-gradient-5: #150d05;
+    
+    --card-bg: rgba(80, 50, 30, 0.4);
+    --card-border: rgba(200, 140, 80, 0.3);
+    --card-shadow: rgba(30, 15, 0, 0.8);
+    --card-hover-shadow: rgba(160, 100, 60, 0.5);
+    
+    --btn-bg-1: #4a3a2a;
+    --btn-bg-2: #3a2a1a;
+    --btn-shadow: rgba(50, 30, 20, 0.7);
+    
+    --title-gradient-1: #b09070;
+    --title-gradient-2: #d0b090;
+    --title-gradient-3: #f0d0b0;
+    --title-gradient-4: #c0a080;
+    --title-gradient-5: #e0c0a0;
+    
+    --overlay-brightness: 0.5;
+    --scrollbar-track: rgba(40, 30, 20, 0.6);
+    --scrollbar-thumb: rgba(200, 140, 80, 0.4);
+    
+    --blur-amount: 24px;
+}
+
+/* Arctic Blue Theme */
+body[data-theme="arctic"] {
+    --bg-gradient-1: #0a1518;
+    --bg-gradient-2: #0f2530;
+    --bg-gradient-3: #0d1a20;
+    --bg-gradient-4: #12303c;
+    --bg-gradient-5: #081214;
+    
+    --card-bg: rgba(30, 60, 70, 0.4);
+    --card-border: rgba(100, 180, 200, 0.3);
+    --card-shadow: rgba(0, 20, 30, 0.8);
+    --card-hover-shadow: rgba(80, 140, 160, 0.5);
+    
+    --btn-bg-1: #2a4a52;
+    --btn-bg-2: #1a3a42;
+    --btn-shadow: rgba(20, 40, 50, 0.7);
+    
+    --title-gradient-1: #70a8b8;
+    --title-gradient-2: #90c8d8;
+    --title-gradient-3: #b0e8f8;
+    --title-gradient-4: #80b8c8;
+    --title-gradient-5: #a0d8e8;
+    
+    --overlay-brightness: 0.5;
+    --scrollbar-track: rgba(20, 40, 50, 0.6);
+    --scrollbar-thumb: rgba(100, 180, 200, 0.4);
+    
+    --blur-amount: 25px;
+}
+
+/* Rose Gold Theme */
+body[data-theme="rose-gold"] {
+    --bg-gradient-1: #1a0f10;
+    --bg-gradient-2: #2d1f22;
+    --bg-gradient-3: #1f1315;
+    --bg-gradient-4: #3a2528;
+    --bg-gradient-5: #150b0d;
+    
+    --card-bg: rgba(80, 50, 55, 0.4);
+    --card-border: rgba(200, 150, 160, 0.3);
+    --card-shadow: rgba(30, 10, 15, 0.8);
+    --card-hover-shadow: rgba(160, 110, 120, 0.5);
+    
+    --btn-bg-1: #4a3538;
+    --btn-bg-2: #3a2528;
+    --btn-shadow: rgba(50, 30, 35, 0.7);
+    
+    --title-gradient-1: #b08890;
+    --title-gradient-2: #d0a8b0;
+    --title-gradient-3: #f0c8d0;
+    --title-gradient-4: #c098a0;
+    --title-gradient-5: #e0b8c0;
+    
+    --overlay-brightness: 0.5;
+    --scrollbar-track: rgba(40, 30, 35, 0.6);
+    --scrollbar-thumb: rgba(200, 150, 160, 0.4);
+    
+    --blur-amount: 24px;
+}
+
+/* Ember Theme */
+body[data-theme="ember"] {
+    --bg-gradient-1: #1a0f08;
+    --bg-gradient-2: #2d1f10;
+    --bg-gradient-3: #1f1309;
+    --bg-gradient-4: #3a2512;
+    --bg-gradient-5: #150d05;
+    
+    --card-bg: rgba(80, 45, 25, 0.4);
+    --card-border: rgba(220, 120, 60, 0.3);
+    --card-shadow: rgba(30, 10, 0, 0.8);
+    --card-hover-shadow: rgba(180, 90, 40, 0.5);
+    
+    --btn-bg-1: #4a3020;
+    --btn-bg-2: #3a2010;
+    --btn-shadow: rgba(50, 25, 10, 0.7);
+    
+    --title-gradient-1: #c08850;
+    --title-gradient-2: #e0a870;
+    --title-gradient-3: #ffc890;
+    --title-gradient-4: #d09860;
+    --title-gradient-5: #f0b880;
+    
+    --overlay-brightness: 0.5;
+    --scrollbar-track: rgba(40, 25, 15, 0.6);
+    --scrollbar-thumb: rgba(220, 120, 60, 0.4);
+    
+    --blur-amount: 24px;
+}
+
+/* Slate Storm Theme */
+body[data-theme="slate"] {
+    --bg-gradient-1: #12141a;
+    --bg-gradient-2: #1d202d;
+    --bg-gradient-3: #15171f;
+    --bg-gradient-4: #252838;
+    --bg-gradient-5: #0f1115;
+    
+    --card-bg: rgba(45, 50, 65, 0.4);
+    --card-border: rgba(110, 120, 140, 0.3);
+    --card-shadow: rgba(5, 10, 20, 0.8);
+    --card-hover-shadow: rgba(90, 100, 120, 0.5);
+    
+    --btn-bg-1: #35384a;
+    --btn-bg-2: #25283a;
+    --btn-shadow: rgba(25, 30, 40, 0.7);
+    
+    --title-gradient-1: #8890a0;
+    --title-gradient-2: #a8b0c0;
+    --title-gradient-3: #c8d0e0;
+    --title-gradient-4: #98a0b0;
+    --title-gradient-5: #b8c0d0;
+    
+    --overlay-brightness: 0.5;
+    --scrollbar-track: rgba(35, 40, 55, 0.6);
+    --scrollbar-thumb: rgba(110, 120, 140, 0.4);
+    
+    --blur-amount: 24px;
+}
+
+/* Neon Night Theme */
+body[data-theme="neon"] {
+    --bg-gradient-1: #0a0a15;
+    --bg-gradient-2: #0f0f25;
+    --bg-gradient-3: #0d0d1a;
+    --bg-gradient-4: #121230;
+    --bg-gradient-5: #080812;
+    
+    --card-bg: rgba(30, 30, 60, 0.4);
+    --card-border: rgba(120, 100, 220, 0.4);
+    --card-shadow: rgba(10, 0, 30, 0.8);
+    --card-hover-shadow: rgba(100, 80, 200, 0.6);
+    
+    --btn-bg-1: #2a2a50;
+    --btn-bg-2: #1a1a40;
+    --btn-shadow: rgba(20, 10, 50, 0.8);
+    
+    --title-gradient-1: #8070c0;
+    --title-gradient-2: #a090e0;
+    --title-gradient-3: #c0b0ff;
+    --title-gradient-4: #9080d0;
+    --title-gradient-5: #b0a0f0;
+    
+    --overlay-brightness: 0.4;
+    --scrollbar-track: rgba(20, 20, 50, 0.6);
+    --scrollbar-thumb: rgba(120, 100, 220, 0.5);
+    
+    --blur-amount: 28px;
+}
+
+/* Copper Rust Theme */
+body[data-theme="copper"] {
+    --bg-gradient-1: #1a1008;
+    --bg-gradient-2: #2d1f10;
+    --bg-gradient-3: #1f1309;
+    --bg-gradient-4: #3a2a15;
+    --bg-gradient-5: #150d05;
+    
+    --card-bg: rgba(70, 45, 25, 0.4);
+    --card-border: rgba(180, 110, 60, 0.3);
+    --card-shadow: rgba(25, 10, 0, 0.8);
+    --card-hover-shadow: rgba(150, 90, 50, 0.5);
+    
+    --btn-bg-1: #4a3520;
+    --btn-bg-2: #3a2510;
+    --btn-shadow: rgba(45, 25, 10, 0.7);
+    
+    --title-gradient-1: #b08050;
+    --title-gradient-2: #d0a070;
+    --title-gradient-3: #f0c090;
+    --title-gradient-4: #c09060;
+    --title-gradient-5: #e0b080;
+    
+    --overlay-brightness: 0.5;
+    --scrollbar-track: rgba(35, 20, 10, 0.6);
+    --scrollbar-thumb: rgba(180, 110, 60, 0.4);
+    
+    --blur-amount: 24px;
+}
+
+/* Mint Frost Theme */
+body[data-theme="mint"] {
+    --bg-gradient-1: #0a1512;
+    --bg-gradient-2: #0f2520;
+    --bg-gradient-3: #0d1a16;
+    --bg-gradient-4: #123028;
+    --bg-gradient-5: #08120f;
+    
+    --card-bg: rgba(30, 60, 50, 0.4);
+    --card-border: rgba(100, 200, 160, 0.3);
+    --card-shadow: rgba(0, 20, 15, 0.8);
+    --card-hover-shadow: rgba(80, 160, 130, 0.5);
+    
+    --btn-bg-1: #2a4a40;
+    --btn-bg-2: #1a3a30;
+    --btn-shadow: rgba(20, 40, 35, 0.7);
+    
+    --title-gradient-1: #70b098;
+    --title-gradient-2: #90d0b8;
+    --title-gradient-3: #b0f0d8;
+    --title-gradient-4: #80c0a8;
+    --title-gradient-5: #a0e0c8;
+    
+    --overlay-brightness: 0.5;
+    --scrollbar-track: rgba(20, 40, 35, 0.6);
+    --scrollbar-thumb: rgba(100, 200, 160, 0.4);
+    
+    --blur-amount: 25px;
+}
+
+body {
+    background: linear-gradient(135deg, 
+        var(--bg-gradient-1) 0%, 
+        var(--bg-gradient-2) 25%, 
+        var(--bg-gradient-3) 50%, 
+        var(--bg-gradient-4) 75%, 
+        var(--bg-gradient-5) 100%);
+    background-size: 400% 400%;
+    animation: gradientBackground 15s ease infinite;
+    position: relative;
+    transform: translateZ(0);
+    will-change: background-position;
+    transition: background 0.5s ease;
+}
+
+@keyframes gradientBackground {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* Theme Toggle Button with Custom SVG Icon */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 12px 16px;
+    backdrop-filter: blur(var(--blur-amount)) saturate(180%);
+    -webkit-backdrop-filter: blur(var(--blur-amount)) saturate(180%);
+    box-shadow: 0 8px 32px var(--card-shadow);
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    transform: translateZ(0);
+}
+
+.theme-toggle.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.theme-toggle:hover {
+    transform: translate3d(0, -2px, 0);
+    box-shadow: 0 12px 40px var(--card-hover-shadow);
+    border-color: rgba(150, 150, 150, 0.5);
+}
+
+.theme-icon {
+    width: 20px;
+    height: 20px;
+    transition: all 0.3s ease;
+}
+
+.theme-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.theme-menu {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    z-index: 9999;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 8px;
+    backdrop-filter: blur(var(--blur-amount)) saturate(180%);
+    -webkit-backdrop-filter: blur(var(--blur-amount)) saturate(180%);
+    box-shadow: 0 12px 48px var(--card-shadow);
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 200px;
+    max-height: 70vh;
+    overflow-y: auto;
+    animation: slideDown 0.3s ease;
+    transform: translateZ(0);
+}
+
+.theme-menu::-webkit-scrollbar {
+    width: 8px;
+}
+
+.theme-menu::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+    border-radius: 10px;
+}
+
+.theme-menu::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 10px;
+}
+
+.theme-menu.active {
+    display: flex;
+}
+
+.theme-menu.hidden {
+    display: none !important;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translate3d(0, -10px, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.theme-option {
+    padding: 12px 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transform: translateZ(0);
+}
+
+.theme-option:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translate3d(2px, 0, 0);
+}
+
+.theme-option.active {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.theme-option .checkmark {
+    opacity: 0;
+    font-size: 16px;
+}
+
+.theme-option.active .checkmark {
+    opacity: 1;
+}
+
+.bg-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 1s ease, filter 0.5s ease;
+    filter: brightness(var(--overlay-brightness));
+    transform: translateZ(0);
+}
+
+.bg-overlay.loaded {
+    opacity: 1;
+}
+
+.wrap {
+    padding: 40px;
+    max-width: 1200px;
+    margin: auto;
+    position: relative;
+    z-index: 1;
+    max-height: 85vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transform: translateZ(0);
+}
+
+.wrap::-webkit-scrollbar {
+    width: 10px;
+}
+
+.wrap::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+
+.wrap::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+
+.wrap::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+h1 {
+    text-align: center;
+    font-size: 56px;
+    margin-bottom: 40px;
+    background: linear-gradient(135deg, 
+        var(--title-gradient-1) 0%, 
+        var(--title-gradient-2) 25%, 
+        var(--title-gradient-3) 50%, 
+        var(--title-gradient-4) 75%, 
+        var(--title-gradient-5) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 900;
+    letter-spacing: 4px;
+    animation: gradientShift 8s ease infinite;
+    background-size: 200% 200%;
+    filter: drop-shadow(0 4px 20px rgba(200, 200, 200, 0.3)) 
+            drop-shadow(0 8px 40px rgba(150, 150, 150, 0.2))
+            drop-shadow(0 0 60px rgba(180, 180, 180, 0.15));
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    transform: translateZ(0);
+    will-change: background-position;
+    transition: filter 0.5s ease;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 28px;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 30px, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.section-btn, .category-btn {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    padding: 32px;
+    backdrop-filter: blur(var(--blur-amount)) saturate(180%);
+    -webkit-backdrop-filter: blur(var(--blur-amount)) saturate(180%);
+    box-shadow: 0 12px 40px var(--card-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: center;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                border-color 0.4s ease,
+                background 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    transform: translateZ(0);
+    will-change: transform;
+    color: var(--text-primary);
+}
+
+.section-btn::before, .category-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    transition: left 0.6s;
+    transform: translateZ(0);
+}
+
+.section-btn:hover::before, .category-btn:hover::before {
+    left: 100%;
+}
+
+.section-btn:hover, .category-btn:hover {
+    transform: translate3d(0, -10px, 0) scale(1.03);
+    box-shadow: 
+        0 20px 60px var(--card-shadow),
+        0 12px 35px var(--card-hover-shadow),
+        0 0 0 1px rgba(150, 150, 150, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border-color: rgba(140, 140, 140, 0.5);
+}
+
+.section-btn:active, .category-btn:active {
+    transform: translate3d(0, -6px, 0) scale(0.98);
+}
+
+.section-btn img, .category-btn img {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    object-fit: cover;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.7));
+    transform: translateZ(0);
+}
+
+.section-btn.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+    filter: grayscale(0.8);
+}
+
+.section-btn.disabled:hover {
+    transform: none;
+    box-shadow: 0 12px 40px var(--card-shadow);
+}
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    padding: 28px;
+    backdrop-filter: blur(var(--blur-amount)) saturate(180%);
+    -webkit-backdrop-filter: blur(var(--blur-amount)) saturate(180%);
+    box-shadow: 0 12px 40px var(--card-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                border-color 0.4s ease,
+                background 0.4s ease;
+    animation: cardFadeIn 0.5s ease-out backwards;
+    position: relative;
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+/* Status Badge */
+.status-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    box-shadow: 0 0 10px currentColor, 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.status-badge.checking {
+    background: #fbbf24;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.status-badge.online {
+    background: #10b981;
+}
+
+.status-badge.offline {
+    background: #ef4444;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+@keyframes cardFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translate3d(0, 20px, 0);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translate3d(0, 0, 0);
+    }
+}
+
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.3s; }
+.card:nth-child(4) { animation-delay: 0.4s; }
+.card:nth-child(5) { animation-delay: 0.5s; }
+
+.card:hover {
+    transform: translate3d(0, -10px, 0) scale(1.03);
+    box-shadow: 
+        0 24px 70px var(--card-shadow),
+        0 12px 35px var(--card-hover-shadow),
+        0 0 0 1px rgba(130, 130, 130, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    border-color: rgba(120, 120, 120, 0.6);
+}
+
+.name {
+    font-weight: 700;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    color: var(--text-primary);
+}
+
+.url {
+    font-size: 13px;
+    color: var(--text-secondary);
+    word-break: break-all;
+    margin-bottom: 12px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.icon-img {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    object-fit: cover;
+    filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.8));
+    transform: translateZ(0);
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.btn {
+    padding: 16px;
+    border: none;
+    border-radius: 16px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    color: white;
+    background: linear-gradient(145deg, var(--btn-bg-1) 0%, var(--btn-bg-2) 100%);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                background 0.3s ease;
+    box-shadow: 0 6px 20px var(--btn-shadow);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(80, 80, 80, 0.3);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    transform: translateZ(0);
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+    transform: translateZ(0);
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn:hover {
+    transform: translate3d(0, -3px, 0);
+    box-shadow: 0 10px 30px var(--card-hover-shadow);
+}
+
+.btn:active {
+    transform: translate3d(0, -1px, 0);
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.97);
+    backdrop-filter: blur(20px);
+    display: none;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease;
+    box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.8);
+    transform: translateZ(0);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.overlay iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    transform: translateZ(0);
+}
+
+/* Fixed and Properly Aligned Close Button */
+.closeBtn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(145deg, rgba(200, 30, 60, 0.9), rgba(180, 20, 50, 0.95));
+    border: 1px solid rgba(255, 100, 120, 0.4);
+    cursor: pointer;
+    color: white;
+    font-weight: 700;
+    font-size: 20px;
+    z-index: 10000;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 6px 25px rgba(200, 30, 60, 0.6);
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+    transform: translateZ(0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    overflow: hidden;
+    white-space: nowrap;
+    
+    /* Starts as a circle */
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    padding: 0;
+}
+
+.closeBtn .close-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.closeBtn .close-text {
+    max-width: 0;
+    opacity: 0;
+    transition: max-width 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                opacity 0.3s ease;
+    margin-right: 0;
+    font-size: 16px;
+    overflow: hidden;
+}
+
+.closeBtn:hover {
+    background: linear-gradient(145deg, rgba(220, 40, 70, 1), rgba(200, 30, 60, 1));
+    box-shadow: 0 8px 30px rgba(220, 40, 70, 0.7);
+    
+    /* Expands to pill shape */
+    width: auto;
+    border-radius: 24px;
+    padding: 0 20px 0 0;
+}
+
+.closeBtn:hover .close-text {
+    max-width: 100px;
+    opacity: 1;
+    margin-right: 0;
+}
+
+.backBtn {
+    margin-bottom: 24px;
+    padding: 16px 28px;
+    border-radius: 16px;
+    border: 1px solid var(--card-border);
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    background: linear-gradient(145deg, var(--btn-bg-1) 0%, var(--btn-bg-2) 100%);
+    color: white;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                background 0.3s ease;
+    box-shadow: 0 6px 20px var(--btn-shadow);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    transform: translateZ(0);
+}
+
+.backBtn:hover {
+    transform: translate3d(-6px, 0, 0);
+    box-shadow: 0 8px 30px var(--card-hover-shadow);
+}
+
+.backBtn:active {
+    transform: translate3d(-3px, 0, 0);
+}
+
+.page-enter {
+    animation: pageEnter 0.5s ease-out;
+}
+
+@keyframes pageEnter {
+    from {
+        opacity: 0;
+        transform: translate3d(30px, 0, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 36px;
+    }
+    
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .wrap {
+        padding: 20px;
+    }
+    
+    .theme-toggle {
+        top: 10px;
+        right: 10px;
+        padding: 10px 14px;
+        font-size: 12px;
+    }
+    
+    .theme-menu {
+        top: 60px;
+        right: 10px;
+    }
+}
+</style>
+</head>
+<body data-theme="deep-dark">
+<div class="bg-overlay" id="bgOverlay"></div>
+
+
+<div class="theme-toggle" id="themeToggle">
+    <div class="theme-icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" 
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="currentColor" opacity="0.3"/>
+            <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/>
+            <path d="M12 7V12L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </div>
+    <span>Themes</span>
+</div>
+
+
+<div class="theme-menu" id="themeMenu">
+    <div class="theme-option" data-theme="light">
+        <span>Light Glass</span>
+        <span class="checkmark">✓</span>
+    </div>
+    <div class="theme-option active" data-theme="deep-dark">
+        <span>Deep Dark</span>
+        <span class="checkmark">✓</span>
+    </div>
+    <div class="theme-option" data-theme="oled">
+        <span>OLED Black</span>
+        <span class="checkmark">✓</span>
+    </div>
+    <div class="theme-option" data-theme="midnight">
+        <span>Midnight Blue</span>
+        <span class="checkmark">✓</span>
+    </div>
+    <div class="theme-option" data-theme="charcoal">
+        <span>Charcoal</span>
+        <span class="checkmark">✓</span>
+    </div>
+    <div class="theme-option" data-theme="purple-haze">
+        <span>Purple Haze</span>
+        <span class="checkmark">✓</span>
+    </div>
+    <div class="theme-option" data-theme="forest">
+        <span>Forest Night</span>
+        <span class="checkmark">✓</span>
+    </div>
+    <div class="theme-option" data-theme="crimson">
+        <span>Crimson Shadow</span>
+        <span class="checkmark">✓</span>
+    </div>
+    <div class="theme-option" data-theme="ocean">
+        <span>Ocean Deep</span>
+        <span class="checkmark">✓</span>
+    </div>
+    <div class="theme-option" data-theme="sunset">
+        <span>Sunset Glow</span>
+        <span class="checkmark">✓</span>
+    </div>
+    <div class="theme-option" data-theme="arctic">
+        <span>Arctic Blue</span>
+        <span class="checkmark">✓</span>
+    </div>
+    <div class="theme-option" data-theme="rose-gold">
+        <span>Rose Gold</span>
+        <span class="checkmark">✓</span>
+    </div>
+    <div class="theme-option" data-theme="ember">
+        <span>Ember</span>
+        <span class="checkmark">✓</span>
+    </div>
+    <div class="theme-option" data-theme="slate">
+        <span>Slate Storm</span>
+        <span class="checkmark">✓</span>
+    </div>
+    <div class="theme-option" data-theme="neon">
+        <span>Neon Night</span>
+        <span class="checkmark">✓</span>
+    </div>
+    <div class="theme-option" data-theme="copper">
+        <span>Copper Rust</span>
+        <span class="checkmark">✓</span>
+    </div>
+    <div class="theme-option" data-theme="mint">
+        <span>Mint Frost</span>
+        <span class="checkmark">✓</span>
+    </div>
+</div>
+
+<div class="wrap" id="mainPage">
+    <h1>LIQUID GLASS UI</h1>
+    <div class="grid" id="sectionGrid"></div>
+</div>
+
+<div class="wrap" id="categoryPage" style="display:none;">
+    <button class="backBtn" id="backToSection">← Back to Sections</button>
+    <h1 id="categoryTitle">Category Name</h1>
+    <div class="grid" id="categoryGrid"></div>
+</div>
+
+<div class="wrap" id="linksPage" style="display:none;">
+    <button class="backBtn" id="backToCategory">← Back to Categories</button>
+    <h1 id="linksTitle">Links</h1>
+    <div class="grid" id="linkGrid"></div>
+</div>
+
+<div class="overlay" id="overlay">
+    <button class="closeBtn" id="closeBtn">
+        <span class="close-icon">✕</span>
+        <span class="close-text">Close</span>
+    </button>
+    <iframe id="viewer"></iframe>
+</div>
+
+<script>
+var sections = [
+    {
+        "name": "Proxies",
+        "icon": "https://lh3.googleusercontent.com/rd-d/ALs6j_FHLd2tRXuZ1scbp7T3qKMMw6RhZQvJfw9H-H0qMZ8mcK8s5leebTpWqcJcqV4rzhmrO0dfyOWvsjmRVHpuxGq5nuyuEosCiUfiByCAVzZKVDQHt0efydPGjYEqiC8z3MBwbVbVP7wh3lsyn-2e-3t4FLD59ab8MPPJlQLyquPDXlK_MBeSrTHd77jKW1O8uzLk87r_ow2v2ZXQ1GKfzU86bVooH4Sn4FWLdH_8_uEjhNcTN00BIQ8usYW0phgSymw1dFEkHweLQkZKZd2OlqMh7yqHfhvzcaqBcHpg_wMGmSAtR7TGZDQuY-s8a8j16BaPKek892CEn_1xo9qdJeLBKZDTNJCN5MzAwcyH-YjlFZqNUqLQCfbgIwEHi8x5_RGcG1YhsCrsIiy37x2F1Ecm5BrW7z1V6adlV960nFHRG-EPDQat42-1QSfX3FMzmaDWNGdEETyc0FVGV8SKOUKfmOGOsSyhA_1NgNC41NmABggMoxwF4ZBvxQSd1YZQdAwxJE1e4PocM4Q8cAWsoTLc8eIC7W_d5FNloYA1mlDXqIHY4N1dJ9CQuK5Pw-0HJHdVluYSerbnuRRs8TI32IXrneYuroRWXpHVKAbmG9Rh0ZQf_2QSFpwiRK8BX1vh6xZvHHR_Vg56n8BcSDS41f4LROm3D4zlF-hmBRwd44uXoIigVcn4kLYoC0Y-sLnyfUiMsCSbQRolR17IJMJdHTLSLSTkcTw7taBf6A0y0LUQzbO7fkRIUXbA8763kTuHUS982JNEjNJ1o3QEXR9KGVM-RcWQ_D6cxId4ULaM-t40iTCk77ciM7YwxgmVosvxY-UHdL-_vwTsS7FVg4whaPnS3urslHNMGsaYuCveS4VvGZTHWp_VDxNXLTkP6kG0ECMowb4o5ZaIE07lareE7YedSgCPM9z0Mi3tAKvb4J96zl9qg1LBcL8ixH3pd5Fe4XPI9F6dBBnkd2M26fDbhTIAaISSRjUqYtxDGYNB5HjsqPA8w600Dqlzfp_jyYhiedgMtli2RaRrbMHiK0iREnPaZBiaQLgV9nhsy3Tu=w3840-h2097?auditContext=forDisplay",
+        "enabled": true,
+        "categories": [
+            {
+                "name": "Space",
+                "icon": "https://dev.desmos.live.cdn.cloudflare.net/assets/logo.webp",
+                "links": [
+                    {
+                        "name": "Space Link #1",
+                        "link": "https://dev.desmos.live.cdn.cloudflare.net/",
+                        "iconURL": "https://dev.desmos.live.cdn.cloudflare.net/assets/logo.webp"
+                    },
+                    {
+                        "name": "Space Link #2",
+                        "link": "https://buy.gpu74.ru/",
+                        "iconURL": "https://buy.gpu74.ru/assets/logo.webp"
+                    },
+                    {
+                        "name": "Space Link #3",
+                        "link": "https://member.electricpiano.xyz.cdn.cloudflare.net/",
+                        "iconURL": "https://member.electricpiano.xyz.cdn.cloudflare.net/assets/logo.webp"
+                    },
+                    {
+                        "name": "Space Link #4",
+                        "link": "https://use.doriswel.com/",
+                        "iconURL": "https://use.doriswel.com/assets/logo.webp"
+                    },
+                    {
+                        "name": "Space Link #5",
+                        "link": "https://outerspace.tomashirsch.cl/",
+                        "iconURL": "https://outerspace.tomashirsch.cl/assets/logo.webp"
+                    },
+                    {
+                        "name": "Space Link #6",
+                        "link": "https://spacing.is-a.software.cdn.cloudflare.net/",
+                        "iconURL": "https://spacing.is-a.software.cdn.cloudflare.net/assets/logo.webp"
+                    },
+                    {
+                        "name": "Space Link #7",
+                        "link": "https://spacing.centromariapolis.cl/",
+                        "iconURL": "https://spacing.centromariapolis.cl/assets/logo.webp"
+                    },
+                    {
+                        "name": "Space Link #8",
+                        "link": "https://outerspace.regu.ch/",
+                        "iconURL": "https://outerspace.regu.ch/assets/logo.webp"
+                    },
+                    {
+                        "name": "Space Link #9",
+                        "link": "https://app.infotechnology.com/",
+                        "iconURL": "https://app.infotechnology.com/assets/logo.webp"
+                    }
+                ]
+            },
+            {
+                "name": "DayDreamX",
+                "icon": "https://lh3.googleusercontent.com/rd-d/ALs6j_E3zeoTC4aKM2L96AnuH8eP_uM9W_xfPzNzz4DJ25OHuhoNeoivgUQswQc6kmfr99MybENOSelFlnj-dVjVNupavHR5Qj6tW4Lb7I0VdUrs39O8T4-it0K96sYNxwsGtStUiCddwzQu5rOqbWMCvVQ3oibfGxpx6Cok47wGotk9d4Lih87NAEgsRzQf-WTPNFtGew2TidfOeskpfPoUd9K_UDE8l1xIHTGbwZ0jx9u28ROJq2Ld9-KLBcY4nG5Z2uDrm1McsnPWoZMdFsnYjq0zKEwWR0flsM5nlfrh_0wmprU88fT8ukTxOUmUvAZq2ZJs72L1wwPNwl2PWoxlXAIK7GkRLtWbP1Jwjjt8xZTK3_Xz865Vmmv-lsW-0dtzlVrW5NPgejHUiHsdaPwvCWQtnTsINwzbZH9esSEt2B-Z94PhhdK1hm0sfEenq-Btm2cK3m4V3BxekLnvh8GIYeiGJHDlR885Npd24JI6STV7L0zbC-S8QYiXMy4bBxeHHn1awpZfwGyDxH6jUW24SYoKS2GX4fvxcHPUNK2OxGf9h4hy5rM-Qbtr5CSu1DVFvmdPg2XIpPgRhsN0XJ7wsVDI3yknV_uorrvBcUoJISGHs326-ewZNAnJWDw97KGKInDf78mEJTCzCWp1sbHn38a0ifZjYxQhbkgaKIUcYID_eS4iplrkgNCodXwE7b63_yQxhk46ftCzPFEWuV30vc7m3kSAMhLpPtvm8FXeXAEgGStWwFHo-pIMlMlYqABEqLY_NBgUWy2R-oHGw6sUBaG_HPZYXWtd94FzA0pTB4PHnIvWIw3ZOOQnoQXhiR6cAecwTkj2aJVmOhCpHwDLwBMsl7KD3Mwc5niTkxGeyIkqkNU38WinxDs6EKjNFovtRfh6nPd253t2mJOFJMmp7XA23lQsKflIunjrNl4JW_J5YV5ASG3Zi8m1Xvf-yf-Qeq6ngEpiLGPVjNtK9TjEZvalbspP5yTACItadW9K2tdjdXzhiP03XH1ADQlPmIY1w9qdReSmrcHbNRo4Zh4nWV78OxR82G_HWlWpYYzlwQ=w3840-h2097?auditContext=forDisplay",
+                "links": [
+                    {
+                        "name": "DayDreamX Link #1",
+                        "link": "https://dreaming.is-not.cool.cdn.cloudflare.net/",
+                        "iconURL": "https://lh3.googleusercontent.com/rd-d/ALs6j_E3zeoTC4aKM2L96AnuH8eP_uM9W_xfPzNzz4DJ25OHuhoNeoivgUQswQc6kmfr99MybENOSelFlnj-dVjVNupavHR5Qj6tW4Lb7I0VdUrs39O8T4-it0K96sYNxwsGtStUiCddwzQu5rOqbWMCvVQ3oibfGxpx6Cok47wGotk9d4Lih87NAEgsRzQf-WTPNFtGew2TidfOeskpfPoUd9K_UDE8l1xIHTGbwZ0jx9u28ROJq2Ld9-KLBcY4nG5Z2uDrm1McsnPWoZMdFsnYjq0zKEwWR0flsM5nlfrh_0wmprU88fT8ukTxOUmUvAZq2ZJs72L1wwPNwl2PWoxlXAIK7GkRLtWbP1Jwjjt8xZTK3_Xz865Vmmv-lsW-0dtzlVrW5NPgejHUiHsdaPwvCWQtnTsINwzbZH9esSEt2B-Z94PhhdK1hm0sfEenq-Btm2cK3m4V3BxekLnvh8GIYeiGJHDlR885Npd24JI6STV7L0zbC-S8QYiXMy4bBxeHHn1awpZfwGyDxH6jUW24SYoKS2GX4fvxcHPUNK2OxGf9h4hy5rM-Qbtr5CSu1DVFvmdPg2XIpPgRhsN0XJ7wsVDI3yknV_uorrvBcUoJISGHs326-ewZNAnJWDw97KGKInDf78mEJTCzCWp1sbHn38a0ifZjYxQhbkgaKIUcYID_eS4iplrkgNCodXwE7b63_yQxhk46ftCzPFEWuV30vc7m3kSAMhLpPtvm8FXeXAEgGStWwFHo-pIMlMlYqABEqLY_NBgUWy2R-oHGw6sUBaG_HPZYXWtd94FzA0pTB4PHnIvWIw3ZOOQnoQXhiR6cAecwTkj2aJVmOhCpHwDLwBMsl7KD3Mwc5niTkxGeyIkqkNU38WinxDs6EKjNFovtRfh6nPd253t2mJOFJMmp7XA23lQsKflIunjrNl4JW_J5YV5ASG3Zi8m1Xvf-yf-Qeq6ngEpiLGPVjNtK9TjEZvalbspP5yTACItadW9K2tdjdXzhiP03XH1ADQlPmIY1w9qdReSmrcHbNRo4Zh4nWV78OxR82G_HWlWpYYzlwQ=w3840-h2097?auditContext=forDisplay",
+                        "corsEnabled": true
+                    },
+                    {
+                        "name": "DayDreamX Link #2",
+                        "link": "https://prices.gpu74.ru/",
+                        "iconURL": "https://lh3.googleusercontent.com/rd-d/ALs6j_E3zeoTC4aKM2L96AnuH8eP_uM9W_xfPzNzz4DJ25OHuhoNeoivgUQswQc6kmfr99MybENOSelFlnj-dVjVNupavHR5Qj6tW4Lb7I0VdUrs39O8T4-it0K96sYNxwsGtStUiCddwzQu5rOqbWMCvVQ3oibfGxpx6Cok47wGotk9d4Lih87NAEgsRzQf-WTPNFtGew2TidfOeskpfPoUd9K_UDE8l1xIHTGbwZ0jx9u28ROJq2Ld9-KLBcY4nG5Z2uDrm1McsnPWoZMdFsnYjq0zKEwWR0flsM5nlfrh_0wmprU88fT8ukTxOUmUvAZq2ZJs72L1wwPNwl2PWoxlXAIK7GkRLtWbP1Jwjjt8xZTK3_Xz865Vmmv-lsW-0dtzlVrW5NPgejHUiHsdaPwvCWQtnTsINwzbZH9esSEt2B-Z94PhhdK1hm0sfEenq-Btm2cK3m4V3BxekLnvh8GIYeiGJHDlR885Npd24JI6STV7L0zbC-S8QYiXMy4bBxeHHn1awpZfwGyDxH6jUW24SYoKS2GX4fvxcHPUNK2OxGf9h4hy5rM-Qbtr5CSu1DVFvmdPg2XIpPgRhsN0XJ7wsVDI3yknV_uorrvBcUoJISGHs326-ewZNAnJWDw97KGKInDf78mEJTCzCWp1sbHn38a0ifZjYxQhbkgaKIUcYID_eS4iplrkgNCodXwE7b63_yQxhk46ftCzPFEWuV30vc7m3kSAMhLpPtvm8FXeXAEgGStWwFHo-pIMlMlYqABEqLY_NBgUWy2R-oHGw6sUBaG_HPZYXWtd94FzA0pTB4PHnIvWIw3ZOOQnoQXhiR6cAecwTkj2aJVmOhCpHwDLwBMsl7KD3Mwc5niTkxGeyIkqkNU38WinxDs6EKjNFovtRfh6nPd253t2mJOFJMmp7XA23lQsKflIunjrNl4JW_J5YV5ASG3Zi8m1Xvf-yf-Qeq6ngEpiLGPVjNtK9TjEZvalbspP5yTACItadW9K2tdjdXzhiP03XH1ADQlPmIY1w9qdReSmrcHbNRo4Zh4nWV78OxR82G_HWlWpYYzlwQ=w3840-h2097?auditContext=forDisplay",
+                        "corsEnabled": true
+                    },
+                    {
+                        "name": "DayDreamX Link #3",
+                        "link": "https://daydreaming.boiso.ar/",
+                        "iconURL": "https://lh3.googleusercontent.com/rd-d/ALs6j_E3zeoTC4aKM2L96AnuH8eP_uM9W_xfPzNzz4DJ25OHuhoNeoivgUQswQc6kmfr99MybENOSelFlnj-dVjVNupavHR5Qj6tW4Lb7I0VdUrs39O8T4-it0K96sYNxwsGtStUiCddwzQu5rOqbWMCvVQ3oibfGxpx6Cok47wGotk9d4Lih87NAEgsRzQf-WTPNFtGew2TidfOeskpfPoUd9K_UDE8l1xIHTGbwZ0jx9u28ROJq2Ld9-KLBcY4nG5Z2uDrm1McsnPWoZMdFsnYjq0zKEwWR0flsM5nlfrh_0wmprU88fT8ukTxOUmUvAZq2ZJs72L1wwPNwl2PWoxlXAIK7GkRLtWbP1Jwjjt8xZTK3_Xz865Vmmv-lsW-0dtzlVrW5NPgejHUiHsdaPwvCWQtnTsINwzbZH9esSEt2B-Z94PhhdK1hm0sfEenq-Btm2cK3m4V3BxekLnvh8GIYeiGJHDlR885Npd24JI6STV7L0zbC-S8QYiXMy4bBxeHHn1awpZfwGyDxH6jUW24SYoKS2GX4fvxcHPUNK2OxGf9h4hy5rM-Qbtr5CSu1DVFvmdPg2XIpPgRhsN0XJ7wsVDI3yknV_uorrvBcUoJISGHs326-ewZNAnJWDw97KGKInDf78mEJTCzCWp1sbHn38a0ifZjYxQhbkgaKIUcYID_eS4iplrkgNCodXwE7b63_yQxhk46ftCzPFEWuV30vc7m3kSAMhLpPtvm8FXeXAEgGStWwFHo-pIMlMlYqABEqLY_NBgUWy2R-oHGw6sUBaG_HPZYXWtd94FzA0pTB4PHnIvWIw3ZOOQnoQXhiR6cAecwTkj2aJVmOhCpHwDLwBMsl7KD3Mwc5niTkxGeyIkqkNU38WinxDs6EKjNFovtRfh6nPd253t2mJOFJMmp7XA23lQsKflIunjrNl4JW_J5YV5ASG3Zi8m1Xvf-yf-Qeq6ngEpiLGPVjNtK9TjEZvalbspP5yTACItadW9K2tdjdXzhiP03XH1ADQlPmIY1w9qdReSmrcHbNRo4Zh4nWV78OxR82G_HWlWpYYzlwQ=w3840-h2097?auditContext=forDisplay",
+                        "corsEnabled": true
+                    },
+                    {
+                        "name": "DayDreamX Link #4",
+                        "link": "https://family.doriswel.com/",
+                        "iconURL": "https://lh3.googleusercontent.com/rd-d/ALs6j_E3zeoTC4aKM2L96AnuH8eP_uM9W_xfPzNzz4DJ25OHuhoNeoivgUQswQc6kmfr99MybENOSelFlnj-dVjVNupavHR5Qj6tW4Lb7I0VdUrs39O8T4-it0K96sYNxwsGtStUiCddwzQu5rOqbWMCvVQ3oibfGxpx6Cok47wGotk9d4Lih87NAEgsRzQf-WTPNFtGew2TidfOeskpfPoUd9K_UDE8l1xIHTGbwZ0jx9u28ROJq2Ld9-KLBcY4nG5Z2uDrm1McsnPWoZMdFsnYjq0zKEwWR0flsM5nlfrh_0wmprU88fT8ukTxOUmUvAZq2ZJs72L1wwPNwl2PWoxlXAIK7GkRLtWbP1Jwjjt8xZTK3_Xz865Vmmv-lsW-0dtzlVrW5NPgejHUiHsdaPwvCWQtnTsINwzbZH9esSEt2B-Z94PhhdK1hm0sfEenq-Btm2cK3m4V3BxekLnvh8GIYeiGJHDlR885Npd24JI6STV7L0zbC-S8QYiXMy4bBxeHHn1awpZfwGyDxH6jUW24SYoKS2GX4fvxcHPUNK2OxGf9h4hy5rM-Qbtr5CSu1DVFvmdPg2XIpPgRhsN0XJ7wsVDI3yknV_uorrvBcUoJISGHs326-ewZNAnJWDw97KGKInDf78mEJTCzCWp1sbHn38a0ifZjYxQhbkgaKIUcYID_eS4iplrkgNCodXwE7b63_yQxhk46ftCzPFEWuV30vc7m3kSAMhLpPtvm8FXeXAEgGStWwFHo-pIMlMlYqABEqLY_NBgUWy2R-oHGw6sUBaG_HPZYXWtd94FzA0pTB4PHnIvWIw3ZOOQnoQXhiR6cAecwTkj2aJVmOhCpHwDLwBMsl7KD3Mwc5niTkxGeyIkqkNU38WinxDs6EKjNFovtRfh6nPd253t2mJOFJMmp7XA23lQsKflIunjrNl4JW_J5YV5ASG3Zi8m1Xvf-yf-Qeq6ngEpiLGPVjNtK9TjEZvalbspP5yTACItadW9K2tdjdXzhiP03XH1ADQlPmIY1w9qdReSmrcHbNRo4Zh4nWV78OxR82G_HWlWpYYzlwQ=w3840-h2097?auditContext=forDisplay",
+                        "corsEnabled": true
+                    },
+                    {
+                        "name": "DayDreamX Link #5",
+                        "link": "https://daydreaming.arrowbases.com/",
+                        "iconURL": "https://lh3.googleusercontent.com/rd-d/ALs6j_E3zeoTC4aKM2L96AnuH8eP_uM9W_xfPzNzz4DJ25OHuhoNeoivgUQswQc6kmfr99MybENOSelFlnj-dVjVNupavHR5Qj6tW4Lb7I0VdUrs39O8T4-it0K96sYNxwsGtStUiCddwzQu5rOqbWMCvVQ3oibfGxpx6Cok47wGotk9d4Lih87NAEgsRzQf-WTPNFtGew2TidfOeskpfPoUd9K_UDE8l1xIHTGbwZ0jx9u28ROJq2Ld9-KLBcY4nG5Z2uDrm1McsnPWoZMdFsnYjq0zKEwWR0flsM5nlfrh_0wmprU88fT8ukTxOUmUvAZq2ZJs72L1wwPNwl2PWoxlXAIK7GkRLtWbP1Jwjjt8xZTK3_Xz865Vmmv-lsW-0dtzlVrW5NPgejHUiHsdaPwvCWQtnTsINwzbZH9esSEt2B-Z94PhhdK1hm0sfEenq-Btm2cK3m4V3BxekLnvh8GIYeiGJHDlR885Npd24JI6STV7L0zbC-S8QYiXMy4bBxeHHn1awpZfwGyDxH6jUW24SYoKS2GX4fvxcHPUNK2OxGf9h4hy5rM-Qbtr5CSu1DVFvmdPg2XIpPgRhsN0XJ7wsVDI3yknV_uorrvBcUoJISGHs326-ewZNAnJWDw97KGKInDf78mEJTCzCWp1sbHn38a0ifZjYxQhbkgaKIUcYID_eS4iplrkgNCodXwE7b63_yQxhk46ftCzPFEWuV30vc7m3kSAMhLpPtvm8FXeXAEgGStWwFHo-pIMlMlYqABEqLY_NBgUWy2R-oHGw6sUBaG_HPZYXWtd94FzA0pTB4PHnIvWIw3ZOOQnoQXhiR6cAecwTkj2aJVmOhCpHwDLwBMsl7KD3Mwc5niTkxGeyIkqkNU38WinxDs6EKjNFovtRfh6nPd253t2mJOFJMmp7XA23lQsKflIunjrNl4JW_J5YV5ASG3Zi8m1Xvf-yf-Qeq6ngEpiLGPVjNtK9TjEZvalbspP5yTACItadW9K2tdjdXzhiP03XH1ADQlPmIY1w9qdReSmrcHbNRo4Zh4nWV78OxR82G_HWlWpYYzlwQ=w3840-h2097?auditContext=forDisplay",
+                        "corsEnabled": true
+                    },
+                    {
+                        "name": "DayDreamX Link #6",
+                        "link": "https://dreams.gorich.hk/",
+                        "iconURL": "https://lh3.googleusercontent.com/rd-d/ALs6j_E3zeoTC4aKM2L96AnuH8eP_uM9W_xfPzNzz4DJ25OHuhoNeoivgUQswQc6kmfr99MybENOSelFlnj-dVjVNupavHR5Qj6tW4Lb7I0VdUrs39O8T4-it0K96sYNxwsGtStUiCddwzQu5rOqbWMCvVQ3oibfGxpx6Cok47wGotk9d4Lih87NAEgsRzQf-WTPNFtGew2TidfOeskpfPoUd9K_UDE8l1xIHTGbwZ0jx9u28ROJq2Ld9-KLBcY4nG5Z2uDrm1McsnPWoZMdFsnYjq0zKEwWR0flsM5nlfrh_0wmprU88fT8ukTxOUmUvAZq2ZJs72L1wwPNwl2PWoxlXAIK7GkRLtWbP1Jwjjt8xZTK3_Xz865Vmmv-lsW-0dtzlVrW5NPgejHUiHsdaPwvCWQtnTsINwzbZH9esSEt2B-Z94PhhdK1hm0sfEenq-Btm2cK3m4V3BxekLnvh8GIYeiGJHDlR885Npd24JI6STV7L0zbC-S8QYiXMy4bBxeHHn1awpZfwGyDxH6jUW24SYoKS2GX4fvxcHPUNK2OxGf9h4hy5rM-Qbtr5CSu1DVFvmdPg2XIpPgRhsN0XJ7wsVDI3yknV_uorrvBcUoJISGHs326-ewZNAnJWDw97KGKInDf78mEJTCzCWp1sbHn38a0ifZjYxQhbkgaKIUcYID_eS4iplrkgNCodXwE7b63_yQxhk46ftCzPFEWuV30vc7m3kSAMhLpPtvm8FXeXAEgGStWwFHo-pIMlMlYqABEqLY_NBgUWy2R-oHGw6sUBaG_HPZYXWtd94FzA0pTB4PHnIvWIw3ZOOQnoQXhiR6cAecwTkj2aJVmOhCpHwDLwBMsl7KD3Mwc5niTkxGeyIkqkNU38WinxDs6EKjNFovtRfh6nPd253t2mJOFJMmp7XA23lQsKflIunjrNl4JW_J5YV5ASG3Zi8m1Xvf-yf-Qeq6ngEpiLGPVjNtK9TjEZvalbspP5yTACItadW9K2tdjdXzhiP03XH1ADQlPmIY1w9qdReSmrcHbNRo4Zh4nWV78OxR82G_HWlWpYYzlwQ=w3840-h2097?auditContext=forDisplay",
+                        "corsEnabled": true
+                    },
+                    {
+                        "name": "DayDreamX Link #7",
+                        "link": "https://science-math.egevad.se/",
+                        "iconURL": "https://lh3.googleusercontent.com/rd-d/ALs6j_E3zeoTC4aKM2L96AnuH8eP_uM9W_xfPzNzz4DJ25OHuhoNeoivgUQswQc6kmfr99MybENOSelFlnj-dVjVNupavHR5Qj6tW4Lb7I0VdUrs39O8T4-it0K96sYNxwsGtStUiCddwzQu5rOqbWMCvVQ3oibfGxpx6Cok47wGotk9d4Lih87NAEgsRzQf-WTPNFtGew2TidfOeskpfPoUd9K_UDE8l1xIHTGbwZ0jx9u28ROJq2Ld9-KLBcY4nG5Z2uDrm1McsnPWoZMdFsnYjq0zKEwWR0flsM5nlfrh_0wmprU88fT8ukTxOUmUvAZq2ZJs72L1wwPNwl2PWoxlXAIK7GkRLtWbP1Jwjjt8xZTK3_Xz865Vmmv-lsW-0dtzlVrW5NPgejHUiHsdaPwvCWQtnTsINwzbZH9esSEt2B-Z94PhhdK1hm0sfEenq-Btm2cK3m4V3BxekLnvh8GIYeiGJHDlR885Npd24JI6STV7L0zbC-S8QYiXMy4bBxeHHn1awpZfwGyDxH6jUW24SYoKS2GX4fvxcHPUNK2OxGf9h4hy5rM-Qbtr5CSu1DVFvmdPg2XIpPgRhsN0XJ7wsVDI3yknV_uorrvBcUoJISGHs326-ewZNAnJWDw97KGKInDf78mEJTCzCWp1sbHn38a0ifZjYxQhbkgaKIUcYID_eS4iplrkgNCodXwE7b63_yQxhk46ftCzPFEWuV30vc7m3kSAMhLpPtvm8FXeXAEgGStWwFHo-pIMlMlYqABEqLY_NBgUWy2R-oHGw6sUBaG_HPZYXWtd94FzA0pTB4PHnIvWIw3ZOOQnoQXhiR6cAecwTkj2aJVmOhCpHwDLwBMsl7KD3Mwc5niTkxGeyIkqkNU38WinxDs6EKjNFovtRfh6nPd253t2mJOFJMmp7XA23lQsKflIunjrNl4JW_J5YV5ASG3Zi8m1Xvf-yf-Qeq6ngEpiLGPVjNtK9TjEZvalbspP5yTACItadW9K2tdjdXzhiP03XH1ADQlPmIY1w9qdReSmrcHbNRo4Zh4nWV78OxR82G_HWlWpYYzlwQ=w3840-h2097?auditContext=forDisplay",
+                        "corsEnabled": true
+                    },
+                    {
+                        "name": "DayDreamX Link #8",
+                        "link": "https://blog.artweb.website.cdn.cloudflare.net/",
+                        "iconURL": "https://lh3.googleusercontent.com/rd-d/ALs6j_E3zeoTC4aKM2L96AnuH8eP_uM9W_xfPzNzz4DJ25OHuhoNeoivgUQswQc6kmfr99MybENOSelFlnj-dVjVNupavHR5Qj6tW4Lb7I0VdUrs39O8T4-it0K96sYNxwsGtStUiCddwzQu5rOqbWMCvVQ3oibfGxpx6Cok47wGotk9d4Lih87NAEgsRzQf-WTPNFtGew2TidfOeskpfPoUd9K_UDE8l1xIHTGbwZ0jx9u28ROJq2Ld9-KLBcY4nG5Z2uDrm1McsnPWoZMdFsnYjq0zKEwWR0flsM5nlfrh_0wmprU88fT8ukTxOUmUvAZq2ZJs72L1wwPNwl2PWoxlXAIK7GkRLtWbP1Jwjjt8xZTK3_Xz865Vmmv-lsW-0dtzlVrW5NPgejHUiHsdaPwvCWQtnTsINwzbZH9esSEt2B-Z94PhhdK1hm0sfEenq-Btm2cK3m4V3BxekLnvh8GIYeiGJHDlR885Npd24JI6STV7L0zbC-S8QYiXMy4bBxeHHn1awpZfwGyDxH6jUW24SYoKS2GX4fvxcHPUNK2OxGf9h4hy5rM-Qbtr5CSu1DVFvmdPg2XIpPgRhsN0XJ7wsVDI3yknV_uorrvBcUoJISGHs326-ewZNAnJWDw97KGKInDf78mEJTCzCWp1sbHn38a0ifZjYxQhbkgaKIUcYID_eS4iplrkgNCodXwE7b63_yQxhk46ftCzPFEWuV30vc7m3kSAMhLpPtvm8FXeXAEgGStWwFHo-pIMlMlYqABEqLY_NBgUWy2R-oHGw6sUBaG_HPZYXWtd94FzA0pTB4PHnIvWIw3ZOOQnoQXhiR6cAecwTkj2aJVmOhCpHwDLwBMsl7KD3Mwc5niTkxGeyIkqkNU38WinxDs6EKjNFovtRfh6nPd253t2mJOFJMmp7XA23lQsKflIunjrNl4JW_J5YV5ASG3Zi8m1Xvf-yf-Qeq6ngEpiLGPVjNtK9TjEZvalbspP5yTACItadW9K2tdjdXzhiP03XH1ADQlPmIY1w9qdReSmrcHbNRo4Zh4nWV78OxR82G_HWlWpYYzlwQ=w3840-h2097?auditContext=forDisplay",
+                        "corsEnabled": true
+                    }
+                ]
+            },
+            {
+                "name": "Lunaar",
+                "icon": "https://lh3.googleusercontent.com/rd-d/ALs6j_Fbo_4aEObn2ADN_Yl9DgZIRO1pDOfsEOj8h3G7GkjWlbEC68HHuyefXx8-Ib5SltfhHDrHlOQ2vF9sWXD-NTiZfUJXD1g4sllhbGOPMGU-d8hYkyphjTxlg8KX45rAyDMwLovknCKPWu66szeS61io8uQYaer4mq6Zso442j8RWIBfcGTH62LZEcGO7uBPOZv8WZGsLKHjVlHbGqb_SPNs5cZzwRo8ay8A3UGYWqJ9_yV-jw_8ZSM3v2QMhLaiLTx6kGpEf20QL2H7IIGgMayMeNy-A6um9pV6zZ1CiBkW9Ya82jz01tD-wTuu-9CQsgR95kcSAJ2O3jLdwtKTSC_1njM5QaK6pz8pNYrzkN_IbuTJsvnmC0yD3K0tSUy_-KKJi-QsTWXGEaqwEya03JaKBsk4DxPuAvWINS0_kfCdIRK9pH5aY0uJn8T5N-swFiyPTdUaPtmw3kEi-waM79zCnXbUZ_WESZ9P0zUUpD3ix3aBWbu_3P_C_wNAW4sGKa3zL9kWl1Rb2VfWHd7geKqNyVb5PFXzHbhlc1Sto3C7cSB8Kzi1Fm_MjzE2WtlYX8vFLRDbMRLoYkncv-e1Ucpz_KcbVzm6GqJRJFtHX8mIDsAq5HffJmSNCE3oxXpdqjafJSkzyEQilzvkXQSllqeYcYJSA-SCHdv3WHaH4ccyfk4IhGLU9ezETPPE_D20hq0nKiBL3w7s0PeO3L1-hZC2lkZnGrEg7IzUWvV1afIrxH7PgRAQmaDlpOL3Zhyfv7wxWnBrkyGNzvUO3hCOxYULS7WksdfP9JtpT47paI0ApHFf5DPnAnZTYeQnBCQ2IEmXyAKEZ5H8iTC26S5CCeLmAf1VR_TPDPjcMczFoNchnlvakCrLfFNx_tKpc9XzUaROVkWjqNXCPONTAbzS9D17zn-nAmChPDNQF4rgbbS3_vrsSZrnZoNttcJrqFimpNT9rUuljdVi-AadHeGIHEQwjLAs0bpJxi9Xg87SwJTvVFC7Dito4OMVjIZnkVPIN9PTVPXuskzEYl1RyQbpjfzQ0NFYtnRnE1EuBFLond4=w3841-h1947?auditContext=forDisplay",
+                "links": [
+                    {
+                        "name": "Lunaar Link #1",
+                        "link": "https://xag.creatyc.com/",
+                        "iconURL": "https://lh3.googleusercontent.com/rd-d/ALs6j_Fbo_4aEObn2ADN_Yl9DgZIRO1pDOfsEOj8h3G7GkjWlbEC68HHuyefXx8-Ib5SltfhHDrHlOQ2vF9sWXD-NTiZfUJXD1g4sllhbGOPMGU-d8hYkyphjTxlg8KX45rAyDMwLovknCKPWu66szeS61io8uQYaer4mq6Zso442j8RWIBfcGTH62LZEcGO7uBPOZv8WZGsLKHjVlHbGqb_SPNs5cZzwRo8ay8A3UGYWqJ9_yV-jw_8ZSM3v2QMhLaiLTx6kGpEf20QL2H7IIGgMayMeNy-A6um9pV6zZ1CiBkW9Ya82jz01tD-wTuu-9CQsgR95kcSAJ2O3jLdwtKTSC_1njM5QaK6pz8pNYrzkN_IbuTJsvnmC0yD3K0tSUy_-KKJi-QsTWXGEaqwEya03JaKBsk4DxPuAvWINS0_kfCdIRK9pH5aY0uJn8T5N-swFiyPTdUaPtmw3kEi-waM79zCnXbUZ_WESZ9P0zUUpD3ix3aBWbu_3P_C_wNAW4sGKa3zL9kWl1Rb2VfWHd7geKqNyVb5PFXzHbhlc1Sto3C7cSB8Kzi1Fm_MjzE2WtlYX8vFLRDbMRLoYkncv-e1Ucpz_KcbVzm6GqJRJFtHX8mIDsAq5HffJmSNCE3oxXpdqjafJSkzyEQilzvkXQSllqeYcYJSA-SCHdv3WHaH4ccyfk4IhGLU9ezETPPE_D20hq0nKiBL3w7s0PeO3L1-hZC2lkZnGrEg7IzUWvV1afIrxH7PgRAQmaDlpOL3Zhyfv7wxWnBrkyGNzvUO3hCOxYULS7WksdfP9JtpT47paI0ApHFf5DPnAnZTYeQnBCQ2IEmXyAKEZ5H8iTC26S5CCeLmAf1VR_TPDPjcMczFoNchnlvakCrLfFNx_tKpc9XzUaROVkWjqNXCPONTAbzS9D17zn-nAmChPDNQF4rgbbS3_vrsSZrnZoNttcJrqFimpNT9rUuljdVi-AadHeGIHEQwjLAs0bpJxi9Xg87SwJTvVFC7Dito4OMVjIZnkVPIN9PTVPXuskzEYl1RyQbpjfzQ0NFYtnRnE1EuBFLond4=w3841-h1947?auditContext=forDisplay"
+                    },
+                    {
+                        "name": "Lunaar Link #2",
+                        "link": "https://cdn.deez.nz/",
+                        "iconURL": "https://lh3.googleusercontent.com/rd-d/ALs6j_Fbo_4aEObn2ADN_Yl9DgZIRO1pDOfsEOj8h3G7GkjWlbEC68HHuyefXx8-Ib5SltfhHDrHlOQ2vF9sWXD-NTiZfUJXD1g4sllhbGOPMGU-d8hYkyphjTxlg8KX45rAyDMwLovknCKPWu66szeS61io8uQYaer4mq6Zso442j8RWIBfcGTH62LZEcGO7uBPOZv8WZGsLKHjVlHbGqb_SPNs5cZzwRo8ay8A3UGYWqJ9_yV-jw_8ZSM3v2QMhLaiLTx6kGpEf20QL2H7IIGgMayMeNy-A6um9pV6zZ1CiBkW9Ya82jz01tD-wTuu-9CQsgR95kcSAJ2O3jLdwtKTSC_1njM5QaK6pz8pNYrzkN_IbuTJsvnmC0yD3K0tSUy_-KKJi-QsTWXGEaqwEya03JaKBsk4DxPuAvWINS0_kfCdIRK9pH5aY0uJn8T5N-swFiyPTdUaPtmw3kEi-waM79zCnXbUZ_WESZ9P0zUUpD3ix3aBWbu_3P_C_wNAW4sGKa3zL9kWl1Rb2VfWHd7geKqNyVb5PFXzHbhlc1Sto3C7cSB8Kzi1Fm_MjzE2WtlYX8vFLRDbMRLoYkncv-e1Ucpz_KcbVzm6GqJRJFtHX8mIDsAq5HffJmSNCE3oxXpdqjafJSkzyEQilzvkXQSllqeYcYJSA-SCHdv3WHaH4ccyfk4IhGLU9ezETPPE_D20hq0nKiBL3w7s0PeO3L1-hZC2lkZnGrEg7IzUWvV1afIrxH7PgRAQmaDlpOL3Zhyfv7wxWnBrkyGNzvUO3hCOxYULS7WksdfP9JtpT47paI0ApHFf5DPnAnZTYeQnBCQ2IEmXyAKEZ5H8iTC26S5CCeLmAf1VR_TPDPjcMczFoNchnlvakCrLfFNx_tKpc9XzUaROVkWjqNXCPONTAbzS9D17zn-nAmChPDNQF4rgbbS3_vrsSZrnZoNttcJrqFimpNT9rUuljdVi-AadHeGIHEQwjLAs0bpJxi9Xg87SwJTvVFC7Dito4OMVjIZnkVPIN9PTVPXuskzEYl1RyQbpjfzQ0NFYtnRnE1EuBFLond4=w3841-h1947?auditContext=forDisplay"
+                    },
+                    {
+                        "name": "Lunaar Link #3",
+                        "link": "https://yga.warga.ai/",
+                        "iconURL": "https://lh3.googleusercontent.com/rd-d/ALs6j_Fbo_4aEObn2ADN_Yl9DgZIRO1pDOfsEOj8h3G7GkjWlbEC68HHuyefXx8-Ib5SltfhHDrHlOQ2vF9sWXD-NTiZfUJXD1g4sllhbGOPMGU-d8hYkyphjTxlg8KX45rAyDMwLovknCKPWu66szeS61io8uQYaer4mq6Zso442j8RWIBfcGTH62LZEcGO7uBPOZv8WZGsLKHjVlHbGqb_SPNs5cZzwRo8ay8A3UGYWqJ9_yV-jw_8ZSM3v2QMhLaiLTx6kGpEf20QL2H7IIGgMayMeNy-A6um9pV6zZ1CiBkW9Ya82jz01tD-wTuu-9CQsgR95kcSAJ2O3jLdwtKTSC_1njM5QaK6pz8pNYrzkN_IbuTJsvnmC0yD3K0tSUy_-KKJi-QsTWXGEaqwEya03JaKBsk4DxPuAvWINS0_kfCdIRK9pH5aY0uJn8T5N-swFiyPTdUaPtmw3kEi-waM79zCnXbUZ_WESZ9P0zUUpD3ix3aBWbu_3P_C_wNAW4sGKa3zL9kWl1Rb2VfWHd7geKqNyVb5PFXzHbhlc1Sto3C7cSB8Kzi1Fm_MjzE2WtlYX8vFLRDbMRLoYkncv-e1Ucpz_KcbVzm6GqJRJFtHX8mIDsAq5HffJmSNCE3oxXpdqjafJSkzyEQilzvkXQSllqeYcYJSA-SCHdv3WHaH4ccyfk4IhGLU9ezETPPE_D20hq0nKiBL3w7s0PeO3L1-hZC2lkZnGrEg7IzUWvV1afIrxH7PgRAQmaDlpOL3Zhyfv7wxWnBrkyGNzvUO3hCOxYULS7WksdfP9JtpT47paI0ApHFf5DPnAnZTYeQnBCQ2IEmXyAKEZ5H8iTC26S5CCeLmAf1VR_TPDPjcMczFoNchnlvakCrLfFNx_tKpc9XzUaROVkWjqNXCPONTAbzS9D17zn-nAmChPDNQF4rgbbS3_vrsSZrnZoNttcJrqFimpNT9rUuljdVi-AadHeGIHEQwjLAs0bpJxi9Xg87SwJTvVFC7Dito4OMVjIZnkVPIN9PTVPXuskzEYl1RyQbpjfzQ0NFYtnRnE1EuBFLond4=w3841-h1947?auditContext=forDisplay"
+                    },
+                    {
+                        "name": "Lunaar Link #4",
+                        "link": "https://xag.creatyc.com/",
+                        "iconURL": "https://lh3.googleusercontent.com/rd-d/ALs6j_Fbo_4aEObn2ADN_Yl9DgZIRO1pDOfsEOj8h3G7GkjWlbEC68HHuyefXx8-Ib5SltfhHDrHlOQ2vF9sWXD-NTiZfUJXD1g4sllhbGOPMGU-d8hYkyphjTxlg8KX45rAyDMwLovknCKPWu66szeS61io8uQYaer4mq6Zso442j8RWIBfcGTH62LZEcGO7uBPOZv8WZGsLKHjVlHbGqb_SPNs5cZzwRo8ay8A3UGYWqJ9_yV-jw_8ZSM3v2QMhLaiLTx6kGpEf20QL2H7IIGgMayMeNy-A6um9pV6zZ1CiBkW9Ya82jz01tD-wTuu-9CQsgR95kcSAJ2O3jLdwtKTSC_1njM5QaK6pz8pNYrzkN_IbuTJsvnmC0yD3K0tSUy_-KKJi-QsTWXGEaqwEya03JaKBsk4DxPuAvWINS0_kfCdIRK9pH5aY0uJn8T5N-swFiyPTdUaPtmw3kEi-waM79zCnXbUZ_WESZ9P0zUUpD3ix3aBWbu_3P_C_wNAW4sGKa3zL9kWl1Rb2VfWHd7geKqNyVb5PFXzHbhlc1Sto3C7cSB8Kzi1Fm_MjzE2WtlYX8vFLRDbMRLoYkncv-e1Ucpz_KcbVzm6GqJRJFtHX8mIDsAq5HffJmSNCE3oxXpdqjafJSkzyEQilzvkXQSllqeYcYJSA-SCHdv3WHaH4ccyfk4IhGLU9ezETPPE_D20hq0nKiBL3w7s0PeO3L1-hZC2lkZnGrEg7IzUWvV1afIrxH7PgRAQmaDlpOL3Zhyfv7wxWnBrkyGNzvUO3hCOxYULS7WksdfP9JtpT47paI0ApHFf5DPnAnZTYeQnBCQ2IEmXyAKEZ5H8iTC26S5CCeLmAf1VR_TPDPjcMczFoNchnlvakCrLfFNx_tKpc9XzUaROVkWjqNXCPONTAbzS9D17zn-nAmChPDNQF4rgbbS3_vrsSZrnZoNttcJrqFimpNT9rUuljdVi-AadHeGIHEQwjLAs0bpJxi9Xg87SwJTvVFC7Dito4OMVjIZnkVPIN9PTVPXuskzEYl1RyQbpjfzQ0NFYtnRnE1EuBFLond4=w3841-h1947?auditContext=forDisplay"
+                    },
+                    {
+                        "name": "Lunaar Link #5",
+                        "link": "https://fjd.2hinformatika.hu/",
+                        "iconURL": "https://lh3.googleusercontent.com/rd-d/ALs6j_Fbo_4aEObn2ADN_Yl9DgZIRO1pDOfsEOj8h3G7GkjWlbEC68HHuyefXx8-Ib5SltfhHDrHlOQ2vF9sWXD-NTiZfUJXD1g4sllhbGOPMGU-d8hYkyphjTxlg8KX45rAyDMwLovknCKPWu66szeS61io8uQYaer4mq6Zso442j8RWIBfcGTH62LZEcGO7uBPOZv8WZGsLKHjVlHbGqb_SPNs5cZzwRo8ay8A3UGYWqJ9_yV-jw_8ZSM3v2QMhLaiLTx6kGpEf20QL2H7IIGgMayMeNy-A6um9pV6zZ1CiBkW9Ya82jz01tD-wTuu-9CQsgR95kcSAJ2O3jLdwtKTSC_1njM5QaK6pz8pNYrzkN_IbuTJsvnmC0yD3K0tSUy_-KKJi-QsTWXGEaqwEya03JaKBsk4DxPuAvWINS0_kfCdIRK9pH5aY0uJn8T5N-swFiyPTdUaPtmw3kEi-waM79zCnXbUZ_WESZ9P0zUUpD3ix3aBWbu_3P_C_wNAW4sGKa3zL9kWl1Rb2VfWHd7geKqNyVb5PFXzHbhlc1Sto3C7cSB8Kzi1Fm_MjzE2WtlYX8vFLRDbMRLoYkncv-e1Ucpz_KcbVzm6GqJRJFtHX8mIDsAq5HffJmSNCE3oxXpdqjafJSkzyEQilzvkXQSllqeYcYJSA-SCHdv3WHaH4ccyfk4IhGLU9ezETPPE_D20hq0nKiBL3w7s0PeO3L1-hZC2lkZnGrEg7IzUWvV1afIrxH7PgRAQmaDlpOL3Zhyfv7wxWnBrkyGNzvUO3hCOxYULS7WksdfP9JtpT47paI0ApHFf5DPnAnZTYeQnBCQ2IEmXyAKEZ5H8iTC26S5CCeLmAf1VR_TPDPjcMczFoNchnlvakCrLfFNx_tKpc9XzUaROVkWjqNXCPONTAbzS9D17zn-nAmChPDNQF4rgbbS3_vrsSZrnZoNttcJrqFimpNT9rUuljdVi-AadHeGIHEQwjLAs0bpJxi9Xg87SwJTvVFC7Dito4OMVjIZnkVPIN9PTVPXuskzEYl1RyQbpjfzQ0NFYtnRnE1EuBFLond4=w3841-h1947?auditContext=forDisplay"
+                    },
+                    {
+                        "name": "Lunaar Link #6",
+                        "link": "https://oig.creatyc.com/",
+                        "iconURL": "https://lh3.googleusercontent.com/rd-d/ALs6j_Fbo_4aEObn2ADN_Yl9DgZIRO1pDOfsEOj8h3G7GkjWlbEC68HHuyefXx8-Ib5SltfhHDrHlOQ2vF9sWXD-NTiZfUJXD1g4sllhbGOPMGU-d8hYkyphjTxlg8KX45rAyDMwLovknCKPWu66szeS61io8uQYaer4mq6Zso442j8RWIBfcGTH62LZEcGO7uBPOZv8WZGsLKHjVlHbGqb_SPNs5cZzwRo8ay8A3UGYWqJ9_yV-jw_8ZSM3v2QMhLaiLTx6kGpEf20QL2H7IIGgMayMeNy-A6um9pV6zZ1CiBkW9Ya82jz01tD-wTuu-9CQsgR95kcSAJ2O3jLdwtKTSC_1njM5QaK6pz8pNYrzkN_IbuTJsvnmC0yD3K0tSUy_-KKJi-QsTWXGEaqwEya03JaKBsk4DxPuAvWINS0_kfCdIRK9pH5aY0uJn8T5N-swFiyPTdUaPtmw3kEi-waM79zCnXbUZ_WESZ9P0zUUpD3ix3aBWbu_3P_C_wNAW4sGKa3zL9kWl1Rb2VfWHd7geKqNyVb5PFXzHbhlc1Sto3C7cSB8Kzi1Fm_MjzE2WtlYX8vFLRDbMRLoYkncv-e1Ucpz_KcbVzm6GqJRJFtHX8mIDsAq5HffJmSNCE3oxXpdqjafJSkzyEQilzvkXQSllqeYcYJSA-SCHdv3WHaH4ccyfk4IhGLU9ezETPPE_D20hq0nKiBL3w7s0PeO3L1-hZC2lkZnGrEg7IzUWvV1afIrxH7PgRAQmaDlpOL3Zhyfv7wxWnBrkyGNzvUO3hCOxYULS7WksdfP9JtpT47paI0ApHFf5DPnAnZTYeQnBCQ2IEmXyAKEZ5H8iTC26S5CCeLmAf1VR_TPDPjcMczFoNchnlvakCrLfFNx_tKpc9XzUaROVkWjqNXCPONTAbzS9D17zn-nAmChPDNQF4rgbbS3_vrsSZrnZoNttcJrqFimpNT9rUuljdVi-AadHeGIHEQwjLAs0bpJxi9Xg87SwJTvVFC7Dito4OMVjIZnkVPIN9PTVPXuskzEYl1RyQbpjfzQ0NFYtnRnE1EuBFLond4=w3841-h1947?auditContext=forDisplay"
+                    },
+                    {
+                        "name": "Lunaar Link #7",
+                        "link": "https://yka.warga.ai/",
+                        "iconURL": "https://lh3.googleusercontent.com/rd-d/ALs6j_Fbo_4aEObn2ADN_Yl9DgZIRO1pDOfsEOj8h3G7GkjWlbEC68HHuyefXx8-Ib5SltfhHDrHlOQ2vF9sWXD-NTiZfUJXD1g4sllhbGOPMGU-d8hYkyphjTxlg8KX45rAyDMwLovknCKPWu66szeS61io8uQYaer4mq6Zso442j8RWIBfcGTH62LZEcGO7uBPOZv8WZGsLKHjVlHbGqb_SPNs5cZzwRo8ay8A3UGYWqJ9_yV-jw_8ZSM3v2QMhLaiLTx6kGpEf20QL2H7IIGgMayMeNy-A6um9pV6zZ1CiBkW9Ya82jz01tD-wTuu-9CQsgR95kcSAJ2O3jLdwtKTSC_1njM5QaK6pz8pNYrzkN_IbuTJsvnmC0yD3K0tSUy_-KKJi-QsTWXGEaqwEya03JaKBsk4DxPuAvWINS0_kfCdIRK9pH5aY0uJn8T5N-swFiyPTdUaPtmw3kEi-waM79zCnXbUZ_WESZ9P0zUUpD3ix3aBWbu_3P_C_wNAW4sGKa3zL9kWl1Rb2VfWHd7geKqNyVb5PFXzHbhlc1Sto3C7cSB8Kzi1Fm_MjzE2WtlYX8vFLRDbMRLoYkncv-e1Ucpz_KcbVzm6GqJRJFtHX8mIDsAq5HffJmSNCE3oxXpdqjafJSkzyEQilzvkXQSllqeYcYJSA-SCHdv3WHaH4ccyfk4IhGLU9ezETPPE_D20hq0nKiBL3w7s0PeO3L1-hZC2lkZnGrEg7IzUWvV1afIrxH7PgRAQmaDlpOL3Zhyfv7wxWnBrkyGNzvUO3hCOxYULS7WksdfP9JtpT47paI0ApHFf5DPnAnZTYeQnBCQ2IEmXyAKEZ5H8iTC26S5CCeLmAf1VR_TPDPjcMczFoNchnlvakCrLfFNx_tKpc9XzUaROVkWjqNXCPONTAbzS9D17zn-nAmChPDNQF4rgbbS3_vrsSZrnZoNttcJrqFimpNT9rUuljdVi-AadHeGIHEQwjLAs0bpJxi9Xg87SwJTvVFC7Dito4OMVjIZnkVPIN9PTVPXuskzEYl1RyQbpjfzQ0NFYtnRnE1EuBFLond4=w3841-h1947?auditContext=forDisplay"
+                    },
+                    {
+                        "name": "Lunaar Link #8",
+                        "link": "https://xxz.jakarta.st/",
+                        "iconURL": "https://lh3.googleusercontent.com/rd-d/ALs6j_Fbo_4aEObn2ADN_Yl9DgZIRO1pDOfsEOj8h3G7GkjWlbEC68HHuyefXx8-Ib5SltfhHDrHlOQ2vF9sWXD-NTiZfUJXD1g4sllhbGOPMGU-d8hYkyphjTxlg8KX45rAyDMwLovknCKPWu66szeS61io8uQYaer4mq6Zso442j8RWIBfcGTH62LZEcGO7uBPOZv8WZGsLKHjVlHbGqb_SPNs5cZzwRo8ay8A3UGYWqJ9_yV-jw_8ZSM3v2QMhLaiLTx6kGpEf20QL2H7IIGgMayMeNy-A6um9pV6zZ1CiBkW9Ya82jz01tD-wTuu-9CQsgR95kcSAJ2O3jLdwtKTSC_1njM5QaK6pz8pNYrzkN_IbuTJsvnmC0yD3K0tSUy_-KKJi-QsTWXGEaqwEya03JaKBsk4DxPuAvWINS0_kfCdIRK9pH5aY0uJn8T5N-swFiyPTdUaPtmw3kEi-waM79zCnXbUZ_WESZ9P0zUUpD3ix3aBWbu_3P_C_wNAW4sGKa3zL9kWl1Rb2VfWHd7geKqNyVb5PFXzHbhlc1Sto3C7cSB8Kzi1Fm_MjzE2WtlYX8vFLRDbMRLoYkncv-e1Ucpz_KcbVzm6GqJRJFtHX8mIDsAq5HffJmSNCE3oxXpdqjafJSkzyEQilzvkXQSllqeYcYJSA-SCHdv3WHaH4ccyfk4IhGLU9ezETPPE_D20hq0nKiBL3w7s0PeO3L1-hZC2lkZnGrEg7IzUWvV1afIrxH7PgRAQmaDlpOL3Zhyfv7wxWnBrkyGNzvUO3hCOxYULS7WksdfP9JtpT47paI0ApHFf5DPnAnZTYeQnBCQ2IEmXyAKEZ5H8iTC26S5CCeLmAf1VR_TPDPjcMczFoNchnlvakCrLfFNx_tKpc9XzUaROVkWjqNXCPONTAbzS9D17zn-nAmChPDNQF4rgbbS3_vrsSZrnZoNttcJrqFimpNT9rUuljdVi-AadHeGIHEQwjLAs0bpJxi9Xg87SwJTvVFC7Dito4OMVjIZnkVPIN9PTVPXuskzEYl1RyQbpjfzQ0NFYtnRnE1EuBFLond4=w3841-h1947?auditContext=forDisplay"
+                    },
+                    {
+                        "name": "Lunaar Link #9",
+                        "link": "https://bcv.2hinformatika.hu/",
+                        "iconURL": "https://lh3.googleusercontent.com/rd-d/ALs6j_Fbo_4aEObn2ADN_Yl9DgZIRO1pDOfsEOj8h3G7GkjWlbEC68HHuyefXx8-Ib5SltfhHDrHlOQ2vF9sWXD-NTiZfUJXD1g4sllhbGOPMGU-d8hYkyphjTxlg8KX45rAyDMwLovknCKPWu66szeS61io8uQYaer4mq6Zso442j8RWIBfcGTH62LZEcGO7uBPOZv8WZGsLKHjVlHbGqb_SPNs5cZzwRo8ay8A3UGYWqJ9_yV-jw_8ZSM3v2QMhLaiLTx6kGpEf20QL2H7IIGgMayMeNy-A6um9pV6zZ1CiBkW9Ya82jz01tD-wTuu-9CQsgR95kcSAJ2O3jLdwtKTSC_1njM5QaK6pz8pNYrzkN_IbuTJsvnmC0yD3K0tSUy_-KKJi-QsTWXGEaqwEya03JaKBsk4DxPuAvWINS0_kfCdIRK9pH5aY0uJn8T5N-swFiyPTdUaPtmw3kEi-waM79zCnXbUZ_WESZ9P0zUUpD3ix3aBWbu_3P_C_wNAW4sGKa3zL9kWl1Rb2VfWHd7geKqNyVb5PFXzHbhlc1Sto3C7cSB8Kzi1Fm_MjzE2WtlYX8vFLRDbMRLoYkncv-e1Ucpz_KcbVzm6GqJRJFtHX8mIDsAq5HffJmSNCE3oxXpdqjafJSkzyEQilzvkXQSllqeYcYJSA-SCHdv3WHaH4ccyfk4IhGLU9ezETPPE_D20hq0nKiBL3w7s0PeO3L1-hZC2lkZnGrEg7IzUWvV1afIrxH7PgRAQmaDlpOL3Zhyfv7wxWnBrkyGNzvUO3hCOxYULS7WksdfP9JtpT47paI0ApHFf5DPnAnZTYeQnBCQ2IEmXyAKEZ5H8iTC26S5CCeLmAf1VR_TPDPjcMczFoNchnlvakCrLfFNx_tKpc9XzUaROVkWjqNXCPONTAbzS9D17zn-nAmChPDNQF4rgbbS3_vrsSZrnZoNttcJrqFimpNT9rUuljdVi-AadHeGIHEQwjLAs0bpJxi9Xg87SwJTvVFC7Dito4OMVjIZnkVPIN9PTVPXuskzEYl1RyQbpjfzQ0NFYtnRnE1EuBFLond4=w3841-h1947?auditContext=forDisplay"
+                    }
+                ]
+            },
+            {
+                "name": "Vapor",
+                "icon": "https://dontvape.clicksoftware.co.uk/asset/logo-icon.png",
+                "links": [
+                    {
+                        "name": "Vapor Link #1",
+                        "link": "https://dontvape.clicksoftware.co.uk/",
+                        "iconURL": "https://dontvape.clicksoftware.co.uk/asset/logo-icon.png"
+                    },
+                    {
+                        "name": "Vapor Link #2",
+                        "link": "https://robotictoi.lat/",
+                        "iconURL": "https://robotictoi.lat/asset/logo-icon.png"
+                    },
+                    {
+                        "name": "Vapor Link #3",
+                        "link": "https://vaperisveryeducational.dinprima.ro/",
+                        "iconURL": "https://vaperisveryeducational.dinprima.ro/asset/logo-icon.png"
+                    },
+                    {
+                        "name": "Vapor Link #4",
+                        "link": "https://wow.education.cellophaneslinger.net/",
+                        "iconURL": "https://wow.education.cellophaneslinger.net/asset/logo-icon.png"
+                    },
+                    {
+                        "name": "Vapor Link #5",
+                        "link": "https://welcome-to-learning.fredrikkivi.se/",
+                        "iconURL": "https://welcome-to-learning.fredrikkivi.se/asset/logo-icon.png"
+                    },
+                    {
+                        "name": "Vapor Link #6",
+                        "link": "https://auth.relaxingco.cl/",
+                        "iconURL": "https://auth.relaxingco.cl/asset/logo-icon.png"
+                    },
+                    {
+                        "name": "Vapor Link #7",
+                        "link": "https://idkm.tokeslaszlo.ro/",
+                        "iconURL": "https://idkm.tokeslaszlo.ro/asset/logo-icon.png"
+                    },
+                    {
+                        "name": "Vapor Link #8",
+                        "link": "https://vapor.dmvdriverseducation.org/",
+                        "iconURL": "https://vapor.dmvdriverseducation.org/asset/logo-icon.png"
+                    },
+                    {
+                        "name": "Vapor Link #9",
+                        "link": "https://idkm.tokeslaszlo.ro/",
+                        "iconURL": "https://idkm.tokeslaszlo.ro/asset/logo-icon.png"
+                    }
+                ]
+            },
+            {
+                "name": "Injex",
+                "icon": "https://vocabulary.biology.technology.teacher.engineering.remax-fransiza.sk/logo.png",
+                "links": [
+                    {
+                        "name": "Injex Link #1",
+                        "link": "https://vocabulary.biology.technology.teacher.engineering.remax-fransiza.sk/",
+                        "iconURL": "https://vocabulary.biology.technology.teacher.engineering.remax-fransiza.sk/logo.png"
+                    },
+                    {
+                        "name": "Injex Link #2",
+                        "link": "https://cisco-on-bott0m.tar.nz/",
+                        "iconURL": "https://cisco-on-bott0m.tar.nz/logo.png"
+                    },
+                    {
+                        "name": "Injex Link #3",
+                        "link": "https://macarena-slowed-reverb.guildstashtracker.xyz/",
+                        "iconURL": "https://macarena-slowed-reverb.guildstashtracker.xyz/logo.png"
+                    },
+                    {
+                        "name": "Injex Link #4",
+                        "link": "https://faaaaaaaaa-master-6000.mitandita.net/",
+                        "iconURL": "https://faaaaaaaaa-master-6000.mitandita.net/logo.png"
+                    },
+                    {
+                        "name": "Injex Link #5",
+                        "link": "https://music.technology.library.engineering.biology.polden21vek.com/",
+                        "iconURL": "https://music.technology.library.engineering.biology.polden21vek.com/logo.png"
+                    },
+                    {
+                        "name": "Injex Link #6",
+                        "link": "https://homework.music.learning.lecture.classroom.remiosenifoundation.org/",
+                        "iconURL": "https://music.technology.library.engineering.biology.polden21vek.com/logo.png"
+                    },
+                    {
+                        "name": "Injex Link #7",
+                        "link": "https://𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞.scuaagz.com/",
+                        "iconURL": "https://𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞𰻞.scuaagz.com/logo.png"
+                    }, //found da discord https://discord.gg/fthwjDWWG2
+                    {
+                        "name": "Injex Link #8",
+                        "link": "https://computer.chemistry.teacher.learning.library.bmt2022.at/",
+                        "iconURL": "https://computer.chemistry.teacher.learning.library.bmt2022.at/logo.png"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Games",
+        "icon": "https://cdn-icons-png.flaticon.com/512/3523/3523063.png",
+        "enabled": false,
+        "categories": []
+    }
+];
+
+//var sections builder https://html.cafe/xb749e989 or https://html-compiler.global.ssl.fastly.net/xb749e989
+
+// Theme functionality
+var themeToggle = document.getElementById("themeToggle");
+var themeMenu = document.getElementById("themeMenu");
+var themeOptions = document.querySelectorAll(".theme-option");
+var currentTheme = localStorage.getItem("theme") || "deep-dark";
+
+// Set initial theme
+document.body.setAttribute("data-theme", currentTheme);
+// Remove all active classes first to prevent multiple active states
+themeOptions.forEach(function(option) {
+    option.classList.remove("active");
+});
+// Then set the correct one as active
+themeOptions.forEach(function(option) {
+    if (option.getAttribute("data-theme") === currentTheme) {
+        option.classList.add("active");
+    }
+});
+
+themeToggle.onclick = function(e) {
+    e.stopPropagation();
+    themeMenu.classList.toggle("active");
+};
+
+// Close theme menu when clicking outside
+document.addEventListener("click", function(e) {
+    if (!themeMenu.contains(e.target) && !themeToggle.contains(e.target)) {
+        themeMenu.classList.remove("active");
+    }
+});
+
+themeOptions.forEach(function(option) {
+    option.onclick = function() {
+        var theme = this.getAttribute("data-theme");
+        document.body.setAttribute("data-theme", theme);
+        localStorage.setItem("theme", theme);
+        
+        themeOptions.forEach(function(opt) {
+            opt.classList.remove("active");
+        });
+        this.classList.add("active");
+        
+        themeMenu.classList.remove("active");
+    };
+});
+
+// Main app functionality
+var sectionGrid = document.getElementById("sectionGrid");
+sections.forEach(function(sec) {
+    var btn = document.createElement("div");
+    btn.className = "section-btn";
+    btn.innerHTML = '<img src="' + sec.icon + '">' + sec.name;
+    if (!sec.enabled) {
+        btn.classList.add("disabled");
+        btn.title = "Under Maintenance";
+    } else {
+        btn.onclick = function() { showCategories(sec); };
+    }
+    sectionGrid.appendChild(btn);
+});
+
+function showCategories(sec) {
+    document.getElementById("mainPage").style.display = "none";
+    var categoryPage = document.getElementById("categoryPage");
+    categoryPage.style.display = "block";
+    categoryPage.classList.add("page-enter");
+    document.getElementById("categoryTitle").textContent = sec.name;
+    var catGrid = document.getElementById("categoryGrid");
+    catGrid.innerHTML = "";
+    sec.categories.forEach(function(cat) {
+        var btn = document.createElement("div");
+        btn.className = "category-btn";
+        btn.innerHTML = '<img src="' + cat.icon + '"> ' + cat.name;
+        btn.onclick = function() { showLinks(cat); };
+        catGrid.appendChild(btn);
+    });
+}
+
+function showLinks(cat) {
+    document.getElementById("categoryPage").style.display = "none";
+    var linksPage = document.getElementById("linksPage");
+    linksPage.style.display = "block";
+    linksPage.classList.add("page-enter");
+    document.getElementById("linksTitle").textContent = cat.name;
+    var linkGrid = document.getElementById("linkGrid");
+    linkGrid.innerHTML = "";
+    
+    cat.links.forEach(function(info) {
+        var card = document.createElement("div");
+        card.className = "card";
+        
+        var buttonsHTML;
+        if (info.corsEnabled) {
+            buttonsHTML = '<button class="btn newtab">🌐 Open in New Tab</button>';
+        } else {
+            buttonsHTML = '<button class="btn embed">🚀 Launch Embed</button>' +
+                         '<button class="btn cloak">🎭 Launch Cloaked</button>';
+        }
+        
+        card.innerHTML = '<div class="status-badge checking"></div>' +
+            '<div class="name"><img src="' + info.iconURL + '" class="icon-img">' + info.name + '</div>' +
+            '<div class="url">' + info.link + '</div>' +
+            '<div class="controls">' + buttonsHTML + '</div>';
+        linkGrid.appendChild(card);
+
+        // Check URL status
+        checkURLStatus(info.link, card.querySelector('.status-badge'));
+
+        if (info.corsEnabled) {
+            card.querySelector(".newtab").onclick = function() {
+                window.open(info.link, '_blank');
+            };
+        } else {
+            card.querySelector(".embed").onclick = function() {
+                document.getElementById("viewer").src = info.link;
+                document.getElementById("overlay").style.display = "block";
+                // Hide theme button and menu during embed
+                document.getElementById("themeToggle").classList.add("hidden");
+                document.getElementById("themeMenu").classList.add("hidden");
+            };
+            
+            card.querySelector(".cloak").onclick = function() {
+                var w = window.open("about:blank");
+                w.document.write('<html><head><title>New Tab</title></head><body style="margin:0;padding:0;"><iframe src="' + info.link + '" style="width:100%;height:100%;border:0;"></iframe></body></html>');
+            };
+        }
+    });
+}
+
+// Function to check URL status with multiple fallback methods for restricted environments
+function checkURLStatus(url, badgeElement) {
+    // Method 0: Try to fetch actual source code to detect blocking pages
+    trySourceCodeCheck();
+    
+    function trySourceCodeCheck() {
+        fetch(url, {
+            method: 'GET',
+            mode: 'cors',
+            cache: 'no-cache'
+        })
+        .then(function(response) {
+            if (!response.ok) {
+                tryImageMethod();
+                return;
+            }
+            return response.text();
+        })
+        .then(function(html) {
+            if (!html) return;
+            
+            // Convert to lowercase for case-insensitive checking
+            var htmlLower = html.toLowerCase();
+            
+            // List of keywords that indicate a blocked/filtered page
+            var blockKeywords = [
+                'blocked',
+                'cisco',
+                'lightspeed',
+                'goguardian',
+                'securly',
+                'content filter',
+                'web filter',
+                'access denied',
+                'blocked by administrator',
+                'this site has been blocked',
+                'blocked site',
+                'category: ',
+                'fortiguard',
+                'websense',
+                'barracuda',
+                'iboss',
+                'contentkeeper',
+                'smoothwall',
+                'netsweeper',
+                'blockpage',
+                'filter-block',
+                'site blocked',
+                'access restricted'
+            ];
+            
+            // Check if any blocking keywords are present
+            var isBlocked = blockKeywords.some(function(keyword) {
+                return htmlLower.indexOf(keyword) !== -1;
+            });
+            
+            if (isBlocked) {
+                badgeElement.classList.remove('checking');
+                badgeElement.classList.add('offline');
+                badgeElement.title = 'Blocked by filter';
+            } else {
+                // Site is accessible and not blocked
+                badgeElement.classList.remove('checking');
+                badgeElement.classList.add('online');
+                badgeElement.title = 'Online (verified unblocked)';
+            }
+        })
+        .catch(function(error) {
+            // CORS error or fetch failed, try next method
+            tryImageMethod();
+        });
+    }
+    
+    function tryImageMethod() {
+        // Method 1: Try loading an image from the domain (most reliable on restricted systems)
+        var img = new Image();
+        var timeout = setTimeout(function() {
+            // Timeout after 10 seconds
+            img.src = '';
+            tryFetchMethod();
+        }, 10000);
+        
+        img.onload = function() {
+            clearTimeout(timeout);
+            badgeElement.classList.remove('checking');
+            badgeElement.classList.add('online');
+            badgeElement.title = 'Online (reachable)';
+        };
+        
+        img.onerror = function() {
+            clearTimeout(timeout);
+            // Image failed, but this doesn't always mean site is down
+            // Try next method
+            tryFetchMethod();
+        };
+        
+        // Try to load favicon or any small resource
+        try {
+            var urlObj = new URL(url);
+            img.src = urlObj.origin + '/favicon.ico?' + Date.now();
+        } catch (e) {
+            tryFetchMethod();
+        }
+    }
+    
+    function tryFetchMethod() {
+        // Method 2: Try fetch with no-cors (works on some restricted systems)
+        fetch(url, {
+            method: 'GET',
+            mode: 'no-cors',
+            cache: 'no-cache',
+            redirect: 'follow'
+        })
+        .then(function(response) {
+            badgeElement.classList.remove('checking');
+            badgeElement.classList.add('online');
+            badgeElement.title = 'Online (reachable)';
+        })
+        .catch(function(error) {
+            // Method 3: Try with iframe as last resort
+            tryIframeMethod();
+        });
+    }
+    
+    function tryIframeMethod() {
+        // Create hidden iframe to test if site loads
+        var iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.style.position = 'absolute';
+        iframe.style.width = '1px';
+        iframe.style.height = '1px';
+        iframe.style.opacity = '0';
+        iframe.style.pointerEvents = 'none';
+        
+        var iframeTimeout = setTimeout(function() {
+            try {
+                document.body.removeChild(iframe);
+            } catch(e) {}
+            // All methods failed
+            badgeElement.classList.remove('checking');
+            badgeElement.classList.add('offline');
+            badgeElement.title = 'Unreachable or blocked';
+        }, 5000);
+        
+        iframe.onload = function() {
+            clearTimeout(iframeTimeout);
+            
+            // Try to check iframe content for blocking keywords
+            try {
+                var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                var iframeHtml = iframeDoc.body.innerHTML.toLowerCase();
+                
+                var blockKeywords = ['blocked', 'cisco', 'lightspeed', 'goguardian', 'securly', 'content filter', 'access denied'];
+                var isBlocked = blockKeywords.some(function(keyword) {
+                    return iframeHtml.indexOf(keyword) !== -1;
+                });
+                
+                document.body.removeChild(iframe);
+                badgeElement.classList.remove('checking');
+                
+                if (isBlocked) {
+                    badgeElement.classList.add('offline');
+                    badgeElement.title = 'Blocked by filter';
+                } else {
+                    badgeElement.classList.add('online');
+                    badgeElement.title = 'Online (verified)';
+                }
+            } catch (e) {
+                // Can't access iframe content (CORS), but it loaded
+                try {
+                    document.body.removeChild(iframe);
+                } catch(e2) {}
+                badgeElement.classList.remove('checking');
+                badgeElement.classList.add('online');
+                badgeElement.title = 'Online (verified)';
+            }
+        };
+        
+        iframe.onerror = function() {
+            clearTimeout(iframeTimeout);
+            try {
+                document.body.removeChild(iframe);
+            } catch(e) {}
+            badgeElement.classList.remove('checking');
+            badgeElement.classList.add('offline');
+            badgeElement.title = 'Offline or blocked';
+        };
+        
+        try {
+            iframe.src = url;
+            document.body.appendChild(iframe);
+        } catch (e) {
+            clearTimeout(iframeTimeout);
+            badgeElement.classList.remove('checking');
+            badgeElement.classList.add('offline');
+            badgeElement.title = 'Cannot check status';
+        }
+    }
+}
+
+document.getElementById("backToSection").onclick = function() {
+    document.getElementById("categoryPage").style.display = "none";
+    document.getElementById("mainPage").style.display = "block";
+};
+
+document.getElementById("backToCategory").onclick = function() {
+    document.getElementById("linksPage").style.display = "none";
+    document.getElementById("categoryPage").style.display = "block";
+};
+
+document.getElementById("closeBtn").onclick = function() {
+    document.getElementById("overlay").style.display = "none";
+    document.getElementById("viewer").src = "";
+    // Show theme button again when overlay is closed
+    document.getElementById("themeToggle").classList.remove("hidden");
+    document.getElementById("themeMenu").classList.remove("hidden");
+};
+</script>
+</body>
+</html>
+
+<script defer data-domain="html.cafe" src="https://milkymouse.com/js/script.js"></script>
+   
