@@ -14,3 +14,15 @@ eval(atob(
   "bnQub3BlbigpO2RvY3VtZW50LndyaXRlKGh0bWwpO2RvY3VtZW" +
   "50LmNsb3NlKCl9KQ=="
 ))
+
+/* Paste in this code in any HTML compiler and it will
+ * Load Up the hub:
+ *
+ *      <script src=//tinyurl.com/liquidxx></script>
+ *
+ * Or if you want it like a bookmarklet use:
+ *
+ *      javascript:(function()%7B%3Cscript%20src%3D%2F%2Ftinyurl.com%2Fliquidxx%3E%3C%2Fscript%3E%7D)()%3B
+ *
+ * And they all work as long as this Repo is alive
+ */
