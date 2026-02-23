@@ -1579,7 +1579,7 @@ var sections = [
 var themeToggle = document.getElementById("themeToggle");
 var themeMenu = document.getElementById("themeMenu");
 var themeOptions = document.querySelectorAll(".theme-option");
-var currentTheme = localStorage.getItem("theme") || "deep-dark";
+var currentTheme = localStorage.getItem("theme") || "oled-dark";
 
 // Set initial theme
 document.body.setAttribute("data-theme", currentTheme);
@@ -1754,7 +1754,9 @@ function checkURLStatus(url, badgeElement) {
                 'site blocked',
                 'access restricted',
                 'bark',
-                'managed methods'
+                'managed methods',
+                'net nanny',
+                'block site'
             ];
             
             // Check if any blocking keywords are present
