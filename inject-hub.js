@@ -22,7 +22,7 @@ eval(atob(
  *
  * Or if you want it like a bookmarklet use:
  *
- *      javascript:(function()%7B%3Cscript%20src%3D%2F%2Ftinyurl.com%2Fliquidxx%3E%3C%2Fscript%3E%7D)()%3B
+ *      javascript:(function()%7Bvar%20s%3Ddocument.createElement('script')%3Bs.src%3D'//tinyurl.com/liquidxx'%3Bdocument.body.appendChild(s)%3B%7D)()%3B
  *
  * And they all work as long as this Repo is alive
  */
