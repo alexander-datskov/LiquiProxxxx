@@ -24,7 +24,7 @@ eval(atob(
  *
  ********* Link B *********
  *
- *      <script src=//tinyurl.com/liquidxxx></script>
+ *      <script src=//tinyurl.com/liquidxxxx></script>
  *
  * Or if you want it like a bookmarklet use:
  *
@@ -34,7 +34,7 @@ eval(atob(
  *
  ********* Link B *********
  *
- *      javascript:(function()%7Bvar%20s%3Ddocument.createElement('script')%3Bs.src%3D'//tinyurl.com/liquidxxx'%3Bdocument.body.appendChild(s)%3B%7D)()%3B
+ *      javascript:(function()%7Bvar%20s%3Ddocument.createElement('script')%3Bs.src%3D'//tinyurl.com/liquidxxxx'%3Bdocument.body.appendChild(s)%3B%7D)()%3B
  *
  * And they all work as long as this Repo is alive
  */
