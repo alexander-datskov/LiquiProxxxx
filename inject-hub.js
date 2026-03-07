@@ -18,11 +18,23 @@ eval(atob(
 /* Paste in this code in any HTML compiler and it will
  * Load Up the hub:
  *
+ ********* Link A *********
+ *
  *      <script src=//tinyurl.com/liquidxx></script>
+ *
+ ********* Link B *********
+ *
+ *      <script src=//tinyurl.com/liquidxxx></script>
  *
  * Or if you want it like a bookmarklet use:
  *
+ ********* Link A *********
+ *
  *      javascript:(function()%7Bvar%20s%3Ddocument.createElement('script')%3Bs.src%3D'//tinyurl.com/liquidxx'%3Bdocument.body.appendChild(s)%3B%7D)()%3B
+ *
+ ********* Link B *********
+ *
+ *      javascript:(function()%7Bvar%20s%3Ddocument.createElement('script')%3Bs.src%3D'//tinyurl.com/liquidxxx'%3Bdocument.body.appendChild(s)%3B%7D)()%3B
  *
  * And they all work as long as this Repo is alive
  */
